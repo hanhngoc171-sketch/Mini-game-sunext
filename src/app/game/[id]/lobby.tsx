@@ -1,5 +1,10 @@
 import { Participant, supabase } from '@/types/types'
 import { FormEvent, useEffect, useState } from 'react'
+import {
+  DEFAULT_AVATAR_ID,
+  PLAYER_AVATARS,
+} from '@/constants/avatars'
+import { AvatarOptionButton, FlagAvatar } from '@/components/FlagAvatar'
 
 export default function Lobby({
   gameId,
@@ -125,13 +130,12 @@ export default function Lobby({
         </div>
 
         <div className="relative z-10 mb-lg">
-          <div className="w-24 h-24 bg-surface-white rounded-xl shadow-lg flex items-center justify-center mx-auto mb-sm border-2 border-primary-container">
-            <span
-              className="material-symbols-outlined text-primary text-[48px]"
-              style={{ fontVariationSettings: "'FILL' 1" }}
-            >
-              person
-            </span>
+          <div className="mx-auto mb-sm flex justify-center">
+            <FlagAvatar
+              avatarId={participant.avatar}
+              size="xl"
+              className="border-2 border-primary-container shadow-lg"
+            />
           </div>
           <h1 className="text-headline-sm text-primary mb-xs">
             {participant.nickname}
@@ -207,6 +211,7 @@ function Register({
   pin: string
 }) {
   const [nickname, setNickname] = useState('')
+  const [avatarId, setAvatarId] = useState(DEFAULT_AVATAR_ID)
   const [sending, setSending] = useState(false)
   const [errorMsg, setErrorMsg] = useState<string | null>(null)
 
@@ -218,6 +223,12 @@ function Register({
     const cleanNickname = nickname.trim()
     if (!cleanNickname) {
       setErrorMsg('Vui lòng nhập Nickname')
+      setSending(false)
+      return
+    }
+
+    if (!PLAYER_AVATARS.some((a) => a.id === avatarId)) {
+      setErrorMsg('Vui lòng chọn avatar')
       setSending(false)
       return
     }
@@ -254,7 +265,11 @@ function Register({
 
     const { data: newParticipant, error } = await supabase
       .from('participants')
-      .insert({ nickname: cleanNickname, game_id: gameId })
+      .insert({
+        nickname: cleanNickname,
+        game_id: gameId,
+        avatar: avatarId,
+      })
       .select()
       .single()
 
@@ -275,10 +290,8 @@ function Register({
       <main className="w-full max-w-md relative z-10 animate-fade-in">
         <div className="bg-surface-white rounded-xl shadow-card p-md border border-outline-variant/30">
           <div className="text-center mb-md">
-            <div className="w-16 h-16 bg-primary-container rounded-xl flex items-center justify-center mx-auto mb-sm">
-              <span className="material-symbols-outlined text-on-primary-container text-3xl">
-                badge
-              </span>
+            <div className="mx-auto mb-sm flex justify-center">
+              <FlagAvatar avatarId={avatarId} size="xl" className="shadow-md" />
             </div>
             <h1 className="text-headline-sm text-on-surface mb-xs">
               Nhập nickname
@@ -305,6 +318,27 @@ function Register({
                 autoComplete="off"
                 autoFocus
               />
+            </div>
+
+            <div>
+              <label className="block text-label-md text-on-surface-variant mb-xs">
+                Chọn avatar (Top 10 FIFA)
+              </label>
+              <div className="grid grid-cols-5 gap-2 justify-items-center bg-app-bg rounded-xl p-sm border border-[#CBD5CB]">
+                {PLAYER_AVATARS.map((avatar) => (
+                  <AvatarOptionButton
+                    key={avatar.id}
+                    avatar={avatar}
+                    selected={avatarId === avatar.id}
+                    onSelect={setAvatarId}
+                  />
+                ))}
+              </div>
+              <p className="mt-xs text-center text-label-md text-on-surface-variant">
+                {
+                  PLAYER_AVATARS.find((a) => a.id === avatarId)?.name
+                }
+              </p>
             </div>
 
             {errorMsg && (

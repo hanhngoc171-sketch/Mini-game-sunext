@@ -4,10 +4,12 @@ import { Participant, QuizSet } from '@/types/types'
 import { createClient } from '@/utils/supabase/client'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { FlagAvatar } from '@/components/FlagAvatar'
 
 type BoardRow = {
   participant_id: string
   nickname: string
+  avatar: string | null
   total_score: number
   answered: number
 }
@@ -54,6 +56,7 @@ export default function LiveLeaderboard({
       return {
         participant_id: p.id,
         nickname: p.nickname,
+        avatar: p.avatar,
         total_score: stats.score,
         answered: stats.answered,
       }
@@ -183,15 +186,11 @@ export default function LiveLeaderboard({
                     {rank}
                   </div>
 
-                  <div
-                    className={`w-12 h-12 rounded-full flex items-center justify-center font-bold shrink-0 ${
-                      isTop
-                        ? 'bg-primary-container text-white'
-                        : 'bg-soft-cream/20 text-soft-cream'
-                    }`}
-                  >
-                    {row.nickname.charAt(0).toUpperCase()}
-                  </div>
+                  <FlagAvatar
+                    avatarId={row.avatar}
+                    size="md"
+                    className={isTop ? 'ring-2 ring-primary-container' : ''}
+                  />
 
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2">

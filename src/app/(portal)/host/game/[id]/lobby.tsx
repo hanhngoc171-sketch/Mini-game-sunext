@@ -5,6 +5,7 @@ import { createClient } from '@/utils/supabase/client'
 import { useEffect, useMemo, useState } from 'react'
 import QRCode from 'react-qr-code'
 import { useRouter } from 'next/navigation'
+import { FlagAvatar } from '@/components/FlagAvatar'
 
 export default function Lobby({
   participants,
@@ -146,8 +147,9 @@ export default function Lobby({
                 {participants.map((participant) => (
                   <span
                     key={participant.id}
-                    className="px-md py-xs bg-soft-cream text-primary text-label-lg rounded-full shadow-sm animate-fade-in"
+                    className="px-md py-xs bg-soft-cream text-primary text-label-lg rounded-full shadow-sm animate-fade-in inline-flex items-center gap-xs"
                   >
+                    <FlagAvatar avatarId={participant.avatar} size="sm" />
                     {participant.nickname}
                   </span>
                 ))}

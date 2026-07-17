@@ -152,6 +152,7 @@ export type Database = {
           id: string
           nickname: string
           user_id: string
+          avatar: string | null
         }
         Insert: {
           created_at?: string
@@ -159,6 +160,7 @@ export type Database = {
           id?: string
           nickname: string
           user_id?: string
+          avatar?: string | null
         }
         Update: {
           created_at?: string
@@ -166,6 +168,7 @@ export type Database = {
           id?: string
           nickname?: string
           user_id?: string
+          avatar?: string | null
         }
         Relationships: [
           {

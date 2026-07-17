@@ -1,10 +1,12 @@
 import { GameResult, Participant, QuizSet, supabase } from '@/types/types'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import Confetti from 'react-confetti'
 import useWindowSize from 'react-use/lib/useWindowSize'
 import { useRouter } from 'next/navigation'
+import { FlagAvatar } from '@/components/FlagAvatar'
 
 export default function Results({
+  participants,
   quizSet,
   gameId,
 }: {
@@ -15,6 +17,12 @@ export default function Results({
   const [gameResults, setGameResults] = useState<GameResult[]>([])
   const { width, height } = useWindowSize()
   const router = useRouter()
+
+  const avatarByParticipant = useMemo(() => {
+    const map = new Map<string, string | null>()
+    for (const p of participants) map.set(p.id, p.avatar)
+    return map
+  }, [participants])
 
   useEffect(() => {
     const getResults = async () => {
@@ -39,28 +47,28 @@ export default function Results({
   const runnerUps = gameResults.slice(3)
 
   const Avatar = ({
-    name,
+    participantId,
     size = 'md',
     highlight = false,
   }: {
-    name: string
+    participantId?: string | null
     size?: 'md' | 'lg' | 'xl'
     highlight?: boolean
   }) => {
-    const sizeClass =
-      size === 'xl'
-        ? 'w-40 h-40 text-5xl border-4 border-soft-cream'
-        : size === 'lg'
-          ? 'w-24 h-24 text-3xl border-4 border-outline-variant'
-          : 'w-12 h-12 text-lg border border-white/20'
     return (
-      <div
-        className={`${sizeClass} rounded-full overflow-hidden bg-primary-container flex items-center justify-center text-white font-bold ${
-          highlight ? 'shadow-[0_0_40px_rgba(255,244,164,0.4)]' : ''
-        }`}
-      >
-        {name.charAt(0).toUpperCase()}
-      </div>
+      <FlagAvatar
+        avatarId={
+          participantId ? avatarByParticipant.get(participantId) : null
+        }
+        size={size}
+        className={`${
+          size === 'xl'
+            ? 'border-4 border-soft-cream'
+            : size === 'lg'
+              ? 'border-4 border-outline-variant'
+              : 'border border-white/20'
+        } ${highlight ? 'shadow-[0_0_40px_rgba(255,244,164,0.4)]' : ''}`}
+      />
     )
   }
 
@@ -108,7 +116,7 @@ export default function Results({
           {secondPlace && (
             <div className="flex flex-col items-center flex-1">
               <div className="relative mb-sm">
-                <Avatar name={secondPlace.nickname || '?'} size="lg" />
+                <Avatar participantId={secondPlace.participant_id} size="lg" />
                 <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 bg-outline-variant text-on-surface font-bold px-4 py-1 rounded-full text-label-md">
                   2
                 </div>
@@ -135,7 +143,11 @@ export default function Results({
                     workspace_premium
                   </span>
                 </div>
-                <Avatar name={firstPlace.nickname || '?'} size="xl" highlight />
+                <Avatar
+                  participantId={firstPlace.participant_id}
+                  size="xl"
+                  highlight
+                />
                 <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-soft-cream text-on-tertiary-fixed font-bold px-8 py-2 rounded-full text-headline-sm shadow-xl z-40">
                   1
                 </div>
@@ -154,7 +166,7 @@ export default function Results({
           {thirdPlace && (
             <div className="flex flex-col items-center flex-1">
               <div className="relative mb-sm">
-                <Avatar name={thirdPlace.nickname || '?'} size="lg" />
+                <Avatar participantId={thirdPlace.participant_id} size="lg" />
                 <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 bg-secondary-fixed-dim text-on-secondary-fixed font-bold px-4 py-1 rounded-full text-label-md">
                   3
                 </div>
@@ -181,7 +193,7 @@ export default function Results({
                 <div className="w-10 h-10 flex-shrink-0 bg-white/10 rounded-full flex items-center justify-center font-bold text-white">
                   {index + 4}
                 </div>
-                <Avatar name={gameResult.nickname || '?'} size="md" />
+                <Avatar participantId={gameResult.participant_id} size="md" />
                 <div className="flex-1">
                   <p className="text-white font-bold">{gameResult.nickname}</p>
                   <p className="text-primary-fixed-dim text-sm">
