@@ -4,6 +4,12 @@ import { getScoreByRemainingSeconds, QUESTION_ANSWER_TIME_SEC } from '@/constant
 import { Choice, Question, supabase } from '@/types/types'
 import { useState, useEffect, useCallback, useRef } from 'react'
 import { CountdownCircleTimer } from 'react-countdown-circle-timer'
+import {
+  playCorrectSfx,
+  playTimeoutSfx,
+  playWrongSfx,
+  unlockGameAudio,
+} from '@/utils/gameAudio'
 
 const ANSWER_STYLES = [
   { bg: 'bg-primary text-white', labelBg: 'bg-white/20' },
