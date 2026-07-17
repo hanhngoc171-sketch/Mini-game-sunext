@@ -4,6 +4,9 @@ export const TIME_TIL_CHOICE_REVEAL = 3000
 /** Default countdown per question (seconds) — scoring tiers assume 20s */
 export const QUESTION_ANSWER_TIME_SEC = 20
 
+/** Max players allowed in one game room */
+export const MAX_PLAYERS_PER_ROOM = 100
+
 /**
  * Điểm theo giây còn lại trên đồng hồ đếm ngược (khi trả lời đúng):
  * - 20–19s → 100 điểm

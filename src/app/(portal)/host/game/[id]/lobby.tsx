@@ -6,6 +6,7 @@ import { useEffect, useMemo, useState } from 'react'
 import QRCode from 'react-qr-code'
 import { useRouter } from 'next/navigation'
 import { FlagAvatar } from '@/components/FlagAvatar'
+import { MAX_PLAYERS_PER_ROOM } from '@/constants'
 
 export default function Lobby({
   participants,
@@ -20,7 +21,7 @@ export default function Lobby({
 }) {
   const router = useRouter()
   const supabase = useMemo(() => createClient(), [])
-  const maxPlayers = 60
+  const maxPlayers = MAX_PLAYERS_PER_ROOM
   const currentCount = participants.length
   const [joinUrl, setJoinUrl] = useState('')
   const [starting, setStarting] = useState(false)

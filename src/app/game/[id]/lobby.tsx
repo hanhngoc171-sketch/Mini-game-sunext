@@ -7,6 +7,7 @@ import {
   PLAYER_AVATARS,
 } from '@/constants/avatars'
 import { AvatarOptionButton, FlagAvatar } from '@/components/FlagAvatar'
+import { MAX_PLAYERS_PER_ROOM } from '@/constants'
 
 export default function Lobby({
   gameId,
@@ -127,7 +128,7 @@ export default function Lobby({
             group
           </span>
           <span className="text-label-md text-primary font-bold">
-            {playerCount}/60
+            {playerCount}/{MAX_PLAYERS_PER_ROOM}
           </span>
         </div>
       </header>
@@ -279,8 +280,10 @@ function Register({
         return
       }
 
-      if (count !== null && count >= 60) {
-        setErrorMsg('Rất tiếc! Phòng đã đầy (tối đa 60 người).')
+      if (count !== null && count >= MAX_PLAYERS_PER_ROOM) {
+        setErrorMsg(
+          `Rất tiếc! Phòng đã đầy (tối đa ${MAX_PLAYERS_PER_ROOM} người).`
+        )
         setSending(false)
         return
       }
