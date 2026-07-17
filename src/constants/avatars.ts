@@ -18,9 +18,10 @@ export const PLAYER_AVATARS: PlayerAvatar[] = [
   { id: 'be', name: 'Bỉ', flagCode: 'be', emoji: '🇧🇪' },
   { id: 'nl', name: 'Hà Lan', flagCode: 'nl', emoji: '🇳🇱' },
   { id: 'mx', name: 'Mexico', flagCode: 'mx', emoji: '🇲🇽' },
+  { id: 'vn', name: 'Việt Nam', flagCode: 'vn', emoji: '🇻🇳' },
 ]
 
-export const DEFAULT_AVATAR_ID = PLAYER_AVATARS[0].id
+export const DEFAULT_AVATAR_ID = 'vn'
 
 export function getAvatarById(id: string | null | undefined): PlayerAvatar {
   return (

@@ -322,9 +322,9 @@ function Register({
 
             <div>
               <label className="block text-label-md text-on-surface-variant mb-xs">
-                Chọn avatar (Top 10 FIFA)
+                Chọn avatar (Top 10 FIFA + Việt Nam)
               </label>
-              <div className="grid grid-cols-5 gap-2 justify-items-center bg-app-bg rounded-xl p-sm border border-[#CBD5CB]">
+              <div className="grid grid-cols-5 sm:grid-cols-6 gap-2 justify-items-center bg-app-bg rounded-xl p-sm border border-[#CBD5CB]">
                 {PLAYER_AVATARS.map((avatar) => (
                   <AvatarOptionButton
                     key={avatar.id}

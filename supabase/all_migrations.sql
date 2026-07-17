@@ -40,7 +40,7 @@ create table if not exists public.participants (
     nickname text not null,
     game_id uuid not null references games(id) on delete cascade on update cascade,
     user_id uuid default auth.uid() not null references auth.users(id) on delete cascade on update cascade,
-    avatar text default 'fr',
+    avatar text default 'vn',
     unique (game_id, user_id)
 );
 
