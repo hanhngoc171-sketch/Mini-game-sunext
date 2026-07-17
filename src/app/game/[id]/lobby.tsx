@@ -17,6 +17,7 @@ export default function Lobby({
 }) {
   const [participant, setParticipant] = useState<Participant | null>(null)
   const [checking, setChecking] = useState(true)
+  const [editingProfile, setEditingProfile] = useState(false)
   const [pin, setPin] = useState<string>('')
   const [playerCount, setPlayerCount] = useState(0)
 
@@ -84,14 +85,19 @@ export default function Lobby({
     )
   }
 
-  if (!participant) {
+  if (!participant || editingProfile) {
     return (
       <Register
         gameId={gameId}
         pin={pin}
+        existing={participant}
+        onCancel={
+          participant ? () => setEditingProfile(false) : undefined
+        }
         onRegisterCompleted={(p) => {
           onRegisterCompleted(p)
           setParticipant(p)
+          setEditingProfile(false)
         }}
       />
     )
@@ -179,6 +185,17 @@ export default function Lobby({
               Hãy chuẩn bị kiến thức để giành ngôi quán quân nhé!
             </p>
           </div>
+
+          <button
+            type="button"
+            onClick={() => setEditingProfile(true)}
+            className="mt-sm h-12 px-md inline-flex items-center justify-center gap-xs rounded-xl border-2 border-primary-container text-primary-container text-label-lg font-semibold bg-surface-white/80 hover:bg-surface-white transition-all btn-press"
+          >
+            <span className="material-symbols-outlined text-[20px]">
+              arrow_back
+            </span>
+            Quay lại chỉnh sửa
+          </button>
         </div>
       </main>
 
@@ -197,6 +214,14 @@ export default function Lobby({
               </p>
             </div>
           </div>
+          <button
+            type="button"
+            onClick={() => setEditingProfile(true)}
+            className="h-10 px-sm rounded-lg text-label-md font-semibold text-primary-container hover:bg-primary-container/10 inline-flex items-center gap-1 transition-colors"
+          >
+            <span className="material-symbols-outlined text-[18px]">edit</span>
+            Sửa
+          </button>
         </div>
       </footer>
     </div>
@@ -207,13 +232,20 @@ function Register({
   onRegisterCompleted,
   gameId,
   pin,
+  existing,
+  onCancel,
 }: {
   onRegisterCompleted: (player: Participant) => void
   gameId: string
   pin: string
+  existing?: Participant | null
+  onCancel?: () => void
 }) {
-  const [nickname, setNickname] = useState('')
-  const [avatarId, setAvatarId] = useState(DEFAULT_AVATAR_ID)
+  const isEditing = Boolean(existing)
+  const [nickname, setNickname] = useState(existing?.nickname ?? '')
+  const [avatarId, setAvatarId] = useState(
+    existing?.avatar || DEFAULT_AVATAR_ID
+  )
   const [sending, setSending] = useState(false)
   const [errorMsg, setErrorMsg] = useState<string | null>(null)
 
@@ -235,33 +267,59 @@ function Register({
       return
     }
 
-    const { count, error: countError } = await supabase
-      .from('participants')
-      .select('*', { count: 'exact', head: true })
-      .eq('game_id', gameId)
+    if (!isEditing) {
+      const { count, error: countError } = await supabase
+        .from('participants')
+        .select('*', { count: 'exact', head: true })
+        .eq('game_id', gameId)
 
-    if (countError) {
-      setErrorMsg('Lỗi kiểm tra số lượng người chơi')
-      setSending(false)
-      return
+      if (countError) {
+        setErrorMsg('Lỗi kiểm tra số lượng người chơi')
+        setSending(false)
+        return
+      }
+
+      if (count !== null && count >= 60) {
+        setErrorMsg('Rất tiếc! Phòng đã đầy (tối đa 60 người).')
+        setSending(false)
+        return
+      }
     }
 
-    if (count !== null && count >= 60) {
-      setErrorMsg('Rất tiếc! Phòng đã đầy (tối đa 60 người).')
-      setSending(false)
-      return
-    }
-
-    const { data: existingPlayer } = await supabase
+    const nicknameQuery = supabase
       .from('participants')
       .select('id')
       .eq('game_id', gameId)
       .ilike('nickname', cleanNickname)
-      .maybeSingle()
+
+    const { data: existingPlayer } = existing
+      ? await nicknameQuery.neq('id', existing.id).maybeSingle()
+      : await nicknameQuery.maybeSingle()
 
     if (existingPlayer) {
       setErrorMsg('Nickname này đã được sử dụng. Vui lòng chọn tên khác.')
       setSending(false)
+      return
+    }
+
+    if (existing) {
+      const { data: updated, error } = await supabase
+        .from('participants')
+        .update({
+          nickname: cleanNickname,
+          avatar: avatarId,
+        })
+        .eq('id', existing.id)
+        .select()
+        .single()
+
+      if (error) {
+        setErrorMsg('Không thể cập nhật: ' + error.message)
+        setSending(false)
+        return
+      }
+
+      onRegisterCompleted(updated)
       return
     }
 
@@ -296,7 +354,7 @@ function Register({
               <FlagAvatar avatarId={avatarId} size="xl" className="shadow-md" />
             </div>
             <h1 className="text-headline-sm text-on-surface mb-xs">
-              Nhập nickname
+              {isEditing ? 'Chỉnh sửa hồ sơ' : 'Nhập nickname'}
             </h1>
             <p className="text-body-md text-on-surface-variant">
               {pin
@@ -377,8 +435,23 @@ function Register({
               disabled={sending || !nickname.trim()}
               className="w-full h-[56px] bg-secondary-container hover:bg-secondary text-surface-white text-label-lg rounded-xl shadow-md transition-all btn-press disabled:opacity-50"
             >
-              {sending ? 'Đang xử lý...' : 'Vào phòng'}
+              {sending
+                ? 'Đang lưu...'
+                : isEditing
+                  ? 'Lưu thay đổi'
+                  : 'Vào phòng'}
             </button>
+
+            {onCancel && (
+              <button
+                type="button"
+                onClick={onCancel}
+                disabled={sending}
+                className="w-full h-12 rounded-xl border-2 border-[#CBD5CB] text-on-surface-variant text-label-lg font-semibold hover:bg-app-bg transition-colors disabled:opacity-50"
+              >
+                Hủy
+              </button>
+            )}
           </form>
         </div>
       </main>
