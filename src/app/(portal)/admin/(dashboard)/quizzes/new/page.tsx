@@ -1,6 +1,5 @@
 'use client'
 
-import { createClient } from '@/utils/supabase/client'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
@@ -10,8 +9,6 @@ export default function NewQuizPage() {
   const [description, setDescription] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
-
-  const supabase = createClient()
   const router = useRouter()
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -25,21 +22,40 @@ export default function NewQuizPage() {
       return
     }
 
-    const { data, error: insertError } = await supabase
-      .from('quiz_sets')
-      .insert({
-        name: name.trim(),
-        description: description.trim() || null,
-        status: 'draft',
+    try {
+      const res = await fetch('/api/admin/quiz-sets', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: name.trim(),
+          description: description.trim(),
+        }),
       })
-      .select('id')
-      .single()
 
-    if (insertError) {
-      setError('Đã xảy ra lỗi khi tạo bộ câu hỏi: ' + insertError.message)
+      const payload = await res.json().catch(() => ({}))
+
+      if (!res.ok) {
+        if (res.status === 401) {
+          setError(payload.error || 'Phiên đăng nhập đã hết. Vui lòng đăng nhập lại.')
+          setLoading(false)
+          router.push('/admin/login')
+          return
+        }
+
+        setError(
+          payload.error ||
+            'Đã xảy ra lỗi khi tạo bộ câu hỏi. Vui lòng thử lại.'
+        )
+        setLoading(false)
+        return
+      }
+
+      router.push(`/admin/quizzes/${payload.id}`)
+    } catch {
+      setError(
+        'Không kết nối được máy chủ. Kiểm tra mạng hoặc cấu hình Supabase trên Vercel rồi thử lại.'
+      )
       setLoading(false)
-    } else if (data) {
-      router.push(`/admin/quizzes/${data.id}`)
     }
   }
 
@@ -57,9 +73,11 @@ export default function NewQuizPage() {
 
       <div className="bg-surface-white rounded-xl shadow-sm border border-border-subtle p-md">
         {error && (
-          <div className="mb-sm p-sm bg-error-container text-error-red rounded-xl text-label-md flex items-center gap-xs">
-            <span className="material-symbols-outlined text-[18px]">error</span>
-            {error}
+          <div className="mb-sm p-sm bg-error-container text-error-red rounded-xl text-label-md flex items-start gap-xs">
+            <span className="material-symbols-outlined text-[18px] mt-0.5">
+              error
+            </span>
+            <span>{error}</span>
           </div>
         )}
 

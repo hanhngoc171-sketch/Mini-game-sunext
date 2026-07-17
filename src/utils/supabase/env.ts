@@ -19,8 +19,12 @@ export function getSupabaseEnv(): { url: string; anonKey: string } {
 }
 
 export function hasSupabaseEnv(): boolean {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL?.trim()
+  const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY?.trim()
   return Boolean(
-    process.env.NEXT_PUBLIC_SUPABASE_URL?.trim() &&
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY?.trim()
+    url &&
+      anonKey &&
+      !url.includes('placeholder.supabase.co') &&
+      anonKey !== 'public-anon-key'
   )
 }

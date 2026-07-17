@@ -61,11 +61,13 @@ export async function middleware(request: NextRequest) {
     }
   )
 
-  const { data: { session } } = await supabase.auth.getSession()
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
 
   // Protect /admin routes (except /admin/login)
   if (request.nextUrl.pathname.startsWith('/admin') && !request.nextUrl.pathname.startsWith('/admin/login')) {
-    if (!session) {
+    if (!user) {
       const loginUrl = request.nextUrl.clone()
       loginUrl.pathname = '/admin/login'
       return NextResponse.redirect(loginUrl)
