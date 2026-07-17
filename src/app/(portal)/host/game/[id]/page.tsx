@@ -6,6 +6,8 @@ import { useEffect, useMemo, useState } from 'react'
 import Lobby from './lobby'
 import LiveLeaderboard from './quiz'
 import Results from './results'
+import { useQuizStartSequence } from '@/hooks/useQuizStartSequence'
+import { unlockGameAudio } from '@/utils/gameAudio'
 
 enum AdminScreens {
   lobby = 'lobby',
@@ -25,6 +27,12 @@ export default function Home({
   const [participants, setParticipants] = useState<Participant[]>([])
   const [quizSet, setQuizSet] = useState<QuizSet>()
   const [pin, setPin] = useState<string | null>(null)
+
+  const quizActive = currentScreen === AdminScreens.quiz && !!quizSet
+  const { ready: quizReady, countdownEl } = useQuizStartSequence(
+    gameId,
+    quizActive
+  )
 
   useEffect(() => {
     const getQuestions = async () => {
@@ -87,6 +95,21 @@ export default function Home({
           {
             event: 'UPDATE',
             schema: 'public',
+            table: 'participants',
+            filter: `game_id=eq.${gameId}`,
+          },
+          (payload) => {
+            const updated = payload.new as Participant
+            setParticipants((prev) =>
+              prev.map((p) => (p.id === updated.id ? updated : p))
+            )
+          }
+        )
+        .on(
+          'postgres_changes',
+          {
+            event: 'UPDATE',
+            schema: 'public',
             table: 'games',
             filter: `id=eq.${gameId}`,
           },
@@ -112,18 +135,23 @@ export default function Home({
 
   return (
     <main className="min-h-screen bg-app-bg">
+      {countdownEl}
+
       {currentScreen == AdminScreens.lobby && (
         <Lobby
           participants={participants}
           gameId={gameId}
           pin={pin || undefined}
-          onGameStarted={() => setCurrentScreen(AdminScreens.quiz)}
+          onGameStarted={async () => {
+            await unlockGameAudio()
+            setCurrentScreen(AdminScreens.quiz)
+          }}
         />
       )}
-      {currentScreen == AdminScreens.quiz && quizSet && (
+      {quizActive && quizReady && (
         <LiveLeaderboard
           participants={participants}
-          quizSet={quizSet}
+          quizSet={quizSet!}
           gameId={gameId}
         />
       )}

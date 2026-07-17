@@ -342,6 +342,15 @@ function Register({
     onRegisterCompleted(newParticipant)
   }
 
+  // Unlock audio on first interaction with the form
+  useEffect(() => {
+    const unlock = () => {
+      void import('@/utils/gameAudio').then((m) => m.unlockGameAudio())
+    }
+    window.addEventListener('pointerdown', unlock, { once: true })
+    return () => window.removeEventListener('pointerdown', unlock)
+  }, [])
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-center p-sm bg-soft-cream relative overflow-hidden">
       <div className="background-blob bg-primary w-64 h-64 -top-20 -left-20" />

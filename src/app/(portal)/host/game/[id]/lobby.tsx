@@ -16,7 +16,7 @@ export default function Lobby({
   participants: Participant[]
   gameId: string
   pin?: string
-  onGameStarted?: () => void
+  onGameStarted?: () => void | Promise<void>
 }) {
   const router = useRouter()
   const supabase = useMemo(() => createClient(), [])
@@ -34,6 +34,9 @@ export default function Lobby({
   const onClickStartGame = async () => {
     if (starting) return
     setStarting(true)
+
+    const { unlockGameAudio } = await import('@/utils/gameAudio')
+    await unlockGameAudio()
 
     const { data, error } = await supabase
       .from('games')
@@ -54,7 +57,7 @@ export default function Lobby({
       )
     }
 
-    onGameStarted?.()
+    await onGameStarted?.()
   }
 
   const formattedPin = pin

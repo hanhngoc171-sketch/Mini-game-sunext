@@ -6,6 +6,8 @@ import Lobby from './lobby'
 import Quiz from './quiz'
 import Confetti from 'react-confetti'
 import useWindowSize from 'react-use/lib/useWindowSize'
+import { useQuizStartSequence } from '@/hooks/useQuizStartSequence'
+import { unlockGameAudio } from '@/utils/gameAudio'
 
 enum Screens {
   lobby = 'lobby',
@@ -136,9 +138,25 @@ export default function Home({
   }, [gameId, participant, syncGame, applyGameState])
 
   const showResults = playerFinished || currentScreen === Screens.results
+  const phaseQuiz =
+    currentScreen === Screens.quiz && !showResults && !!participant
+
+  const { ready: quizReady, countdownEl } = useQuizStartSequence(
+    gameId,
+    phaseQuiz
+  )
+
+  // Try unlock audio early when user is in lobby (after register tap)
+  useEffect(() => {
+    if (participant) {
+      void unlockGameAudio()
+    }
+  }, [participant])
 
   return (
     <main className="min-h-screen bg-app-bg">
+      {countdownEl}
+
       {currentScreen === Screens.lobby && !playerFinished && (
         <Lobby
           onRegisterCompleted={onRegisterCompleted}
@@ -146,9 +164,9 @@ export default function Home({
         />
       )}
 
-      {currentScreen === Screens.quiz &&
-        !showResults &&
-        (!participant || !questions?.length || loadingQuiz) && (
+      {phaseQuiz &&
+        quizReady &&
+        (!questions?.length || loadingQuiz) && (
           <div className="min-h-screen flex flex-col items-center justify-center gap-sm bg-app-bg">
             <div className="w-12 h-12 border-4 border-primary/20 border-t-secondary-container rounded-full animate-spin" />
             <p className="text-label-md text-on-surface-variant">
@@ -157,17 +175,13 @@ export default function Home({
           </div>
         )}
 
-      {currentScreen === Screens.quiz &&
-        !!questions?.length &&
-        participant &&
-        !showResults &&
-        !loadingQuiz && (
-          <Quiz
-            questions={questions}
-            participantId={participant.id}
-            onFinished={() => setPlayerFinished(true)}
-          />
-        )}
+      {phaseQuiz && quizReady && !!questions?.length && !loadingQuiz && (
+        <Quiz
+          questions={questions}
+          participantId={participant!.id}
+          onFinished={() => setPlayerFinished(true)}
+        />
+      )}
 
       {showResults && participant && (
         <Results participant={participant} />
