@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import { Be_Vietnam_Pro } from 'next/font/google'
 import './globals.css'
 
+export const dynamic = 'force-dynamic'
+
 const beVietnam = Be_Vietnam_Pro({
   subsets: ['latin', 'vietnamese'],
   weight: ['400', '500', '600', '700', '800'],

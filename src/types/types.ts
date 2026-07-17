@@ -1,10 +1,19 @@
-import { createClient } from '@supabase/supabase-js'
+import { createClient, SupabaseClient } from '@supabase/supabase-js'
 import { Database } from './supabase'
+import { getSupabaseEnv } from '@/utils/supabase/env'
 
-export const supabase = createClient<Database>(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-)
+let _supabase: SupabaseClient<Database> | null = null
+
+export const supabase = new Proxy({} as SupabaseClient<Database>, {
+  get(_target, prop, receiver) {
+    if (!_supabase) {
+      const { url, anonKey } = getSupabaseEnv()
+      _supabase = createClient<Database>(url, anonKey)
+    }
+    const value = Reflect.get(_supabase, prop, receiver)
+    return typeof value === 'function' ? value.bind(_supabase) : value
+  },
+})
 
 export type Participant = Database['public']['Tables']['participants']['Row']
 
