@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+
+<html class="light" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Final Leaderboard - Company Quiz Game</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+        }
+        .confetti-canvas {
+            pointer-events: none;
+            position: absolute;
+            inset: 0;
+            z-index: 10;
+        }
+        .podium-bounce {
+            animation: podium-bounce 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+        @keyframes podium-bounce {
+            0% { transform: translateY(50px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+        .glow-gold {
+            box-shadow: 0 0 40px rgba(252, 208, 105, 0.4);
+        }
+        .scale-up {
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .scale-up:hover {
+            transform: scale(1.05);
+        }
+    </style>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-container": "#fcd069",
+                    "outline": "#727970",
+                    "primary-fixed-dim": "#a0d3a5",
+                    "inverse-primary": "#a0d3a5",
+                    "surface-container-low": "#ecf7e9",
+                    "on-primary": "#ffffff",
+                    "tertiary-fixed-dim": "#ecc15c",
+                    "on-error": "#ffffff",
+                    "on-tertiary-fixed": "#251a00",
+                    "error": "#ba1a1a",
+                    "on-secondary-fixed": "#311300",
+                    "on-secondary-container": "#5c2900",
+                    "surface-container-lowest": "#ffffff",
+                    "soft-cream": "#FFF4A4",
+                    "on-surface-variant": "#414941",
+                    "error-red": "#D92D20",
+                    "on-primary-fixed-variant": "#22502d",
+                    "on-surface": "#151e15",
+                    "inverse-on-surface": "#eaf4e6",
+                    "secondary-fixed-dim": "#ffb689",
+                    "surface-white": "#FFFFFF",
+                    "surface-tint": "#3a6843",
+                    "on-primary-container": "#afe2b3",
+                    "on-secondary": "#ffffff",
+                    "secondary": "#984800",
+                    "surface-bright": "#f2fcee",
+                    "outline-variant": "#c1c9be",
+                    "background": "#f2fcee",
+                    "inverse-surface": "#2a332a",
+                    "on-error-container": "#93000a",
+                    "on-secondary-fixed-variant": "#733500",
+                    "success-green": "#2E7D32",
+                    "secondary-fixed": "#ffdbc8",
+                    "on-tertiary-fixed-variant": "#5b4300",
+                    "app-bg": "#F8FAF8",
+                    "surface-container-highest": "#dbe5d8",
+                    "on-background": "#151e15",
+                    "tertiary-fixed": "#ffdf9c",
+                    "secondary-container": "#fc7d05",
+                    "error-container": "#ffdad6",
+                    "primary-fixed": "#bcefc0",
+                    "surface-dim": "#d3ddcf",
+                    "surface-variant": "#dbe5d8",
+                    "primary": "#204e2b",
+                    "surface-container-high": "#e1ebdd",
+                    "on-tertiary": "#ffffff",
+                    "tertiary": "#584100",
+                    "primary-container": "#386641",
+                    "tertiary-container": "#755800",
+                    "border-subtle": "#D8E0D8",
+                    "surface-container": "#e7f1e3",
+                    "on-primary-fixed": "#00210a",
+                    "surface": "#f2fcee"
+            },
+            "borderRadius": {
+                    "DEFAULT": "16px",
+                    "lg": "16px",
+                    "xl": "24px",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "xs": "8px",
+                    "container-max": "1280px",
+                    "md": "24px",
+                    "sm": "16px",
+                    "gutter": "16px",
+                    "base": "4px",
+                    "lg": "48px",
+                    "xl": "64px"
+            },
+            "fontFamily": {
+                    "body-md": ["Be Vietnam Pro"],
+                    "headline-lg": ["Be Vietnam Pro"],
+                    "headline-md": ["Be Vietnam Pro"],
+                    "label-lg": ["Be Vietnam Pro"],
+                    "headline-sm": ["Be Vietnam Pro"],
+                    "label-md": ["Be Vietnam Pro"],
+                    "display-lg": ["Be Vietnam Pro"]
+            }
+          }
+        }
+      }
+    </script>
+</head>
+<body class="bg-primary min-h-screen font-body-md text-on-surface overflow-hidden relative selection:bg-secondary-container">
+<!-- Confetti Overlay -->
+<canvas class="confetti-canvas" id="confetti"></canvas>
+<!-- Top Navigation Bar (Shared Component Reference) -->
+<header class="sticky top-0 w-full z-50 flex justify-between items-center px-md py-xs max-w-container-max mx-auto bg-transparent">
+<div class="font-headline-sm text-headline-sm font-bold text-primary-fixed-dim">
+            Company Quiz Game
+        </div>
+<div class="flex items-center gap-sm">
+<button class="w-12 h-12 rounded-full flex items-center justify-center text-primary-fixed-dim hover:bg-white/10 transition-all active:scale-95">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="w-12 h-12 rounded-full flex items-center justify-center text-primary-fixed-dim hover:bg-white/10 transition-all active:scale-95">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="w-10 h-10 rounded-full border-2 border-primary-fixed-dim bg-white overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A clean, professional studio portrait of a corporate administrator in a minimalist office setting, soft natural lighting, high-quality photography, neutral colors, 8k resolution." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDU5VylmB6xskROS6W0MDaLkYoXYYnAl8C0jKBOW6QRojsh_0LF6Vg-LxcDftTYtpe7I920Ruq_OU1HUqmQp-sMIZ8tHutxFFrfSJa346zOM7_snmw40omZRWkzrdwTXhIqNv7J8ZJFGV_aJUejjT9x_Mo1Q_NVDZVHDwg4Hg_v_0--UbzH-dW7kJjUJZ3fTxGamIax9lJ2O9gr0w089MG3BaNjRtNb2IvnyCvBQrkfkWA7lHHEUaiUgfuRtSUnbx3O4ASlwbJGGnb_"/>
+</div>
+</div>
+</header>
+<main class="relative z-20 flex flex-col items-center justify-center min-h-[calc(100vh-80px)] p-md">
+<!-- Trophy & Title -->
+<div class="text-center mb-lg podium-bounce" style="animation-delay: 0.1s;">
+<div class="inline-flex items-center justify-center w-24 h-24 mb-sm rounded-full bg-soft-cream/20 border-2 border-soft-cream/30">
+<span class="material-symbols-outlined text-[64px] text-soft-cream" style="font-variation-settings: 'FILL' 1;">emoji_events</span>
+</div>
+<h1 class="font-display-lg text-display-lg text-white mb-xs tracking-tight">KẾT QUẢ CHUNG CUỘC</h1>
+<p class="font-headline-sm text-headline-sm text-primary-fixed-dim opacity-80">Chúc mừng những cá nhân xuất sắc nhất!</p>
+</div>
+<!-- The Podium (Top 3) -->
+<div class="flex items-end justify-center gap-md mb-xl w-full max-w-4xl">
+<!-- Rank 2 -->
+<div class="flex flex-col items-center flex-1 podium-bounce" style="animation-delay: 0.2s;">
+<div class="relative mb-sm">
+<div class="w-24 h-24 rounded-full border-4 border-outline-variant overflow-hidden bg-white scale-up">
+<img class="w-full h-full object-cover" data-alt="A smiling young professional with short hair wearing a crisp white shirt, professional profile picture style, soft focus office background, professional corporate lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCkxpxpW9xNtlOBttmRhXLBH66N77_xBoNnjxqWN1v6v4ym252jFhXEqJn0pOJUqFdpt68u81Otxkns-YFe9K7bWUTiE55r1Eoosxvspk3RW_TB0BtTCDG4A0pVcQEq0MjG2wPPXrmwZgQFyk9afBRnnNon0LYPbP5JkTgogaLq1aB3CIO0nTkqfMSZySIhF3DPrT1ko5dCPY6lk1qWLe5_hzDSNrhmjQz_Na1fhKlVkEdt1yWRKbEaTYB1THm5dje4CcCHhPgVwB6_"/>
+</div>
+<div class="absolute -bottom-2 left-1/2 -translate-x-1/2 bg-outline-variant text-on-surface font-bold px-4 py-1 rounded-full text-label-md">2</div>
+</div>
+<div class="bg-white/10 backdrop-blur-md rounded-t-xl w-full h-40 flex flex-col items-center justify-start pt-sm border-x border-t border-white/20">
+<p class="font-headline-sm text-headline-sm text-white font-bold px-2 text-center">Hoàng Nam</p>
+<p class="font-label-lg text-label-lg text-primary-fixed-dim">12,450 pts</p>
+</div>
+</div>
+<!-- Rank 1 (Dominant) -->
+<div class="flex flex-col items-center flex-1 podium-bounce" style="animation-delay: 0s;">
+<div class="relative mb-sm">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 animate-bounce">
+<span class="material-symbols-outlined text-soft-cream text-[48px]" style="font-variation-settings: 'FILL' 1;">crown</span>
+</div>
+<div class="w-32 h-32 rounded-full border-4 border-soft-cream overflow-hidden bg-white scale-up glow-gold">
+<img class="w-full h-full object-cover" data-alt="A highly detailed close-up portrait of a cheerful Vietnamese woman named Minh Anh in her late 20s, elegant professional business casual attire, warm studio lighting, radiant smile, high-end photography, cinematic atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBxqZD5FWXY-sD9S8_Y0RAY8Bd3bVRRTgXSX_sWH4NXePFTzC_ApPmcL2Z6MwPb8oLrqwrX5hahneqyfRoiYDEY5f5AYbHTWMdqrXdT9U9ZO9-kMZkUJm7MWMhHrhwdmFnujAalqDLSBTH7QFQSwpGufYe4OomiYxRRP0Lk6_kbbFo0DqWVvVwcDsMX3dwTcRTEAwfF0hkfEwkcMZUVyrei3NjCDbTmmHPA914YKY3WD-gWacgbd77t9vNOCGJMfO8iXZ5-8Fy2009S"/>
+</div>
+<div class="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-soft-cream text-on-tertiary-fixed font-bold px-6 py-2 rounded-full text-label-lg shadow-lg">1</div>
+</div>
+<div class="bg-gradient-to-b from-soft-cream to-tertiary-fixed rounded-t-xl w-full h-56 flex flex-col items-center justify-start pt-md border-x border-t border-white/40 shadow-2xl">
+<p class="font-headline-md text-headline-md text-on-tertiary-fixed font-bold px-2 text-center">Minh Anh</p>
+<p class="font-headline-sm text-headline-sm text-on-tertiary-fixed-variant font-bold">14,820 pts</p>
+</div>
+</div>
+<!-- Rank 3 -->
+<div class="flex flex-col items-center flex-1 podium-bounce" style="animation-delay: 0.3s;">
+<div class="relative mb-sm">
+<div class="w-24 h-24 rounded-full border-4 border-secondary-fixed-dim overflow-hidden bg-white scale-up">
+<img class="w-full h-full object-cover" data-alt="A portrait of a confident middle-aged male professional wearing glasses and a navy blue blazer, corporate leadership style photography, friendly expression, well-lit studio setting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB-2FtkpMl1RMxrJZ42nrJOUe5WPgTNNXHRcH2uHMKQFKzs4Wk3D6eaVJsK74jpjAPbwvlaDgdxxR_I-QJZUCbOHF1oyeZE0IHMbCwLBV0PNL6Adig-Wn73fTOMvKavIJn3N0Nf9q5jzTo3qC5XxsWDXvFe6qwhVMUBVqXMYyIQ4zmHDQewZxbd6WCy1XUo1X1ahpsb6yzQlFj_KDVsO2doATp8oBMPfUtbhPGhzgO6Ul0XjApr0dYXoat6pfpJ9UAvgZeB7POF8378"/>
+</div>
+<div class="absolute -bottom-2 left-1/2 -translate-x-1/2 bg-secondary-fixed-dim text-on-secondary-fixed font-bold px-4 py-1 rounded-full text-label-md">3</div>
+</div>
+<div class="bg-white/10 backdrop-blur-md rounded-t-xl w-full h-32 flex flex-col items-center justify-start pt-sm border-x border-t border-white/20">
+<p class="font-headline-sm text-headline-sm text-white font-bold px-2 text-center">Thanh Bình</p>
+<p class="font-label-lg text-label-lg text-primary-fixed-dim">11,900 pts</p>
+</div>
+</div>
+</div>
+<!-- Rank 4 & 5 (Row Below) -->
+<div class="flex gap-md w-full max-w-2xl podium-bounce" style="animation-delay: 0.4s;">
+<div class="flex-1 flex items-center gap-sm bg-white/5 border border-white/10 p-sm rounded-xl hover:bg-white/10 transition-all cursor-default group">
+<div class="w-12 h-12 flex-shrink-0 bg-surface-container-highest rounded-full flex items-center justify-center font-bold text-on-surface">4</div>
+<div class="w-12 h-12 flex-shrink-0 rounded-full overflow-hidden border border-white/20">
+<img class="w-full h-full object-cover" data-alt="Headshot of a modern creative professional with artistic flair, bright lighting, energetic expression, clean background, 4k digital portrait." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBBg8VLV3Lr9oTP8qRESDXFLGfn_GV92xKX2FER7tnKETPGgw-uSa-AyImop3Fhehete0L1x8mZ-CnYFdE6QA1mY1HmwBzAyRnxQlvJxnTY0A32p1myj8fTXU8TS_-CCBSnzu8Y_uh1x-SNmKhCl9dZjGfAbkq-T7ePV0J7AQOhav78XROIxeile0hLo62Kmfr1DgIK_r76phmYnZU_rsyumLLUhNnaQxoM5i0CNI85X-yeiCZmJfE0dC3Os6oOLUHWDVfd8m5CL_aA"/>
+</div>
+<div class="flex-1">
+<p class="text-white font-bold group-hover:text-primary-fixed-dim transition-colors">Quốc Khánh</p>
+<p class="text-primary-fixed-dim text-sm">10,210 pts</p>
+</div>
+</div>
+<div class="flex-1 flex items-center gap-sm bg-white/5 border border-white/10 p-sm rounded-xl hover:bg-white/10 transition-all cursor-default group">
+<div class="w-12 h-12 flex-shrink-0 bg-surface-container-highest rounded-full flex items-center justify-center font-bold text-on-surface">5</div>
+<div class="w-12 h-12 flex-shrink-0 rounded-full overflow-hidden border border-white/20">
+<img class="w-full h-full object-cover" data-alt="Portrait of an enthusiastic female junior executive, cheerful vibes, modern professional aesthetic, bright high-key lighting, corporate photography." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBDb-OBTlp_GkclPfPbwa1I5jy6MG9P-JXJHwZP5JCaI4BJyRcdvnsnpCvDwdsCMkjXrxzS5N8y69JYX8inUabkzxGA8D4LdL00rrCW12_EDtpQlK1ZQzg64soxJVA7iUykpuJlIDMxC2B1DfPg6H7l-pG9_hkJ93EkmgllW__sULHdmJvwy17lKljWHZGa0g2aHRp3uuzVDfhF7VgKA5aTH_p0xaD276Ul89vDFkdFsIsnbISr8LLXhsCLkLJB212N-j39WOOFiwP2"/>
+</div>
+<div class="flex-1">
+<p class="text-white font-bold group-hover:text-primary-fixed-dim transition-colors">Mai Phương</p>
+<p class="text-primary-fixed-dim text-sm">9,850 pts</p>
+</div>
+</div>
+</div>
+<!-- CTA Button -->
+<div class="mt-xl podium-bounce" style="animation-delay: 0.6s;">
+<button class="h-[56px] px-xl bg-secondary-container text-white font-bold text-headline-sm rounded-full shadow-lg shadow-secondary/40 hover:scale-105 active:scale-95 transition-all flex items-center gap-xs" onclick="window.location.reload()">
+                Về trang chủ
+                <span class="material-symbols-outlined">home</span>
+</button>
+</div>
+</main>
+<!-- Interactive Background Decoration -->
+<div class="fixed top-0 left-0 w-full h-full pointer-events-none opacity-20 z-0">
+<div class="absolute top-1/4 -left-20 w-80 h-80 bg-soft-cream/30 rounded-full blur-[100px]"></div>
+<div class="absolute bottom-1/4 -right-20 w-80 h-80 bg-secondary-container/30 rounded-full blur-[100px]"></div>
+</div>
+<script>
+        // Simple Confetti Animation
+        const canvas = document.getElementById('confetti');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        const colors = ['#FFF4A4', '#fc7d05', '#afe2b3', '#ffffff', '#ffdbc8'];
+
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        window.addEventListener('resize', resize);
+        resize();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height - canvas.height;
+                this.size = Math.random() * 8 + 4;
+                this.speed = Math.random() * 3 + 2;
+                this.angle = Math.random() * 360;
+                this.spin = Math.random() * 0.2 - 0.1;
+                this.color = colors[Math.floor(Math.random() * colors.length)];
+            }
+            update() {
+                this.y += this.speed;
+                this.angle += this.spin;
+                if (this.y > canvas.height) {
+                    this.y = -20;
+                    this.x = Math.random() * canvas.width;
+                }
+            }
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.angle);
+                ctx.fillStyle = this.color;
+                ctx.fillRect(-this.size/2, -this.size/2, this.size, this.size);
+                ctx.restore();
+            }
+        }
+
+        for (let i = 0; i < 150; i++) {
+            particles.push(new Particle());
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+
+        // Reveal effect delay for podium
+        document.querySelectorAll('.podium-bounce').forEach((el, i) => {
+            el.style.opacity = '0';
+            setTimeout(() => {
+                el.style.opacity = '1';
+            }, i * 150);
+        });
+    </script>
+</body></html>

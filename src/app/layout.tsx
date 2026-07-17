@@ -1,12 +1,17 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Be_Vietnam_Pro } from 'next/font/google'
 import './globals.css'
 
-const inter = Inter({ subsets: ['latin'] })
+const beVietnam = Be_Vietnam_Pro({
+  subsets: ['latin', 'vietnamese'],
+  weight: ['400', '500', '600', '700', '800'],
+  variable: '--font-be-vietnam',
+  display: 'swap',
+})
 
 export const metadata: Metadata = {
-  title: 'SupaQuiz',
-  description: 'OSS Kahoot Alternative powered by Supabase',
+  title: 'Company Quiz Game',
+  description: 'Internal quiz game for company events',
 }
 
 export default function RootLayout({
@@ -15,8 +20,16 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
+    <html lang="vi">
+      <head>
+        <link
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&display=swap"
+          rel="stylesheet"
+        />
+      </head>
+      <body className={`${beVietnam.variable} font-sans antialiased`}>
+        {children}
+      </body>
     </html>
   )
 }

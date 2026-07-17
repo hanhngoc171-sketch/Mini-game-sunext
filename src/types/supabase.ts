@@ -106,6 +106,7 @@ export type Database = {
           is_answer_revealed: boolean
           phase: string
           quiz_set_id: string
+          pin: string | null
         }
         Insert: {
           created_at?: string
@@ -115,6 +116,7 @@ export type Database = {
           is_answer_revealed?: boolean
           phase?: string
           quiz_set_id: string
+          pin?: string | null
         }
         Update: {
           created_at?: string
@@ -124,6 +126,7 @@ export type Database = {
           is_answer_revealed?: boolean
           phase?: string
           quiz_set_id?: string
+          pin?: string | null
         }
         Relationships: [
           {
@@ -196,6 +199,8 @@ export type Database = {
           image_url: string | null
           order: number
           quiz_set_id: string
+          time_limit: number
+          base_score: number
         }
         Insert: {
           body: string
@@ -204,6 +209,8 @@ export type Database = {
           image_url?: string | null
           order: number
           quiz_set_id: string
+          time_limit?: number
+          base_score?: number
         }
         Update: {
           body?: string
@@ -212,6 +219,8 @@ export type Database = {
           image_url?: string | null
           order?: number
           quiz_set_id?: string
+          time_limit?: number
+          base_score?: number
         }
         Relationships: [
           {
@@ -229,18 +238,24 @@ export type Database = {
           description: string | null
           id: string
           name: string
+          status: string
+          updated_at: string
         }
         Insert: {
           created_at?: string
           description?: string | null
           id?: string
           name: string
+          status?: string
+          updated_at?: string
         }
         Update: {
           created_at?: string
           description?: string | null
           id?: string
           name?: string
+          status?: string
+          updated_at?: string
         }
         Relationships: []
       }

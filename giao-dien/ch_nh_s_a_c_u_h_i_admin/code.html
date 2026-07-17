@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Question Editor - Company Quiz Game</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-container": "#fcd069",
+                    "outline": "#727970",
+                    "primary-fixed-dim": "#a0d3a5",
+                    "inverse-primary": "#a0d3a5",
+                    "surface-container-low": "#ecf7e9",
+                    "on-primary": "#ffffff",
+                    "tertiary-fixed-dim": "#ecc15c",
+                    "on-error": "#ffffff",
+                    "on-tertiary-fixed": "#251a00",
+                    "error": "#ba1a1a",
+                    "on-secondary-fixed": "#311300",
+                    "on-secondary-container": "#5c2900",
+                    "surface-container-lowest": "#ffffff",
+                    "soft-cream": "#FFF4A4",
+                    "on-surface-variant": "#414941",
+                    "error-red": "#D92D20",
+                    "on-primary-fixed-variant": "#22502d",
+                    "on-surface": "#151e15",
+                    "inverse-on-surface": "#eaf4e6",
+                    "secondary-fixed-dim": "#ffb689",
+                    "surface-white": "#FFFFFF",
+                    "surface-tint": "#3a6843",
+                    "on-primary-container": "#afe2b3",
+                    "on-secondary": "#ffffff",
+                    "secondary": "#984800",
+                    "surface-bright": "#f2fcee",
+                    "outline-variant": "#c1c9be",
+                    "background": "#f2fcee",
+                    "inverse-surface": "#2a332a",
+                    "on-error-container": "#93000a",
+                    "on-secondary-fixed-variant": "#733500",
+                    "success-green": "#2E7D32",
+                    "secondary-fixed": "#ffdbc8",
+                    "on-tertiary-fixed-variant": "#5b4300",
+                    "app-bg": "#F8FAF8",
+                    "surface-container-highest": "#dbe5d8",
+                    "on-background": "#151e15",
+                    "tertiary-fixed": "#ffdf9c",
+                    "secondary-container": "#fc7d05",
+                    "error-container": "#ffdad6",
+                    "primary-fixed": "#bcefc0",
+                    "surface-dim": "#d3ddcf",
+                    "surface-variant": "#dbe5d8",
+                    "primary": "#204e2b",
+                    "surface-container-high": "#e1ebdd",
+                    "on-tertiary": "#ffffff",
+                    "tertiary": "#584100",
+                    "primary-container": "#386641",
+                    "tertiary-container": "#755800",
+                    "border-subtle": "#D8E0D8",
+                    "surface-container": "#e7f1e3",
+                    "on-primary-fixed": "#00210a",
+                    "surface": "#f2fcee"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "16px",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "xs": "8px",
+                    "container-max": "1280px",
+                    "md": "24px",
+                    "sm": "16px",
+                    "gutter": "16px",
+                    "base": "4px",
+                    "lg": "48px",
+                    "xl": "64px"
+            },
+            "fontFamily": {
+                    "body-md": ["Be Vietnam Pro"],
+                    "headline-lg": ["Be Vietnam Pro"],
+                    "headline-md": ["Be Vietnam Pro"],
+                    "label-lg": ["Be Vietnam Pro"],
+                    "headline-lg-mobile": ["Be Vietnam Pro"],
+                    "headline-sm": ["Be Vietnam Pro"],
+                    "label-md": ["Be Vietnam Pro"],
+                    "display-lg": ["Be Vietnam Pro"],
+                    "body-lg": ["Be Vietnam Pro"],
+                    "display-lg-mobile": ["Be Vietnam Pro"]
+            },
+            "fontSize": {
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-lg": ["44px", {"lineHeight": "52px", "fontWeight": "700"}],
+                    "headline-md": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
+                    "label-lg": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                    "headline-sm": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                    "display-lg": ["72px", {"lineHeight": "90px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "display-lg-mobile": ["48px", {"lineHeight": "56px", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            font-family: 'Be Vietnam Pro', sans-serif;
+            background-color: #F8FAF8;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .sidebar-active {
+            background-color: #386641;
+            color: #afe2b3;
+        }
+        .radio-custom:checked + label {
+            border-color: #204e2b;
+            background-color: #ecf7e9;
+        }
+        .input-focus-effect:focus {
+            border-color: #204e2b;
+            box-shadow: 0 0 0 4px rgba(32, 78, 43, 0.15);
+            outline: none;
+        }
+    </style>
+</head>
+<body class="flex min-h-screen text-on-surface">
+<!-- SideNavBar (Admin Console) -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-surface-container-low dark:bg-inverse-surface border-r border-outline-variant flex flex-col p-sm gap-xs z-40 hidden md:flex">
+<div class="px-xs py-md">
+<h1 class="font-headline-md text-headline-md font-bold text-primary">Admin Console</h1>
+<p class="font-label-md text-label-md text-on-surface-variant">Corporate HQ</p>
+</div>
+<div class="flex-1 space-y-1">
+<nav class="space-y-1">
+<a class="flex items-center gap-sm px-sm py-xs text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-colors font-label-lg text-label-lg" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+                    Dashboard
+                </a>
+<a class="flex items-center gap-sm px-sm py-xs bg-primary-container text-on-primary-container font-bold rounded-lg transition-colors font-label-lg text-label-lg" href="#">
+<span class="material-symbols-outlined" data-icon="quiz">quiz</span>
+                    My Quizzes
+                </a>
+<a class="flex items-center gap-sm px-sm py-xs text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-colors font-label-lg text-label-lg" href="#">
+<span class="material-symbols-outlined" data-icon="sensors">sensors</span>
+                    Live Sessions
+                </a>
+<a class="flex items-center gap-sm px-sm py-xs text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-colors font-label-lg text-label-lg" href="#">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+                    Reports
+                </a>
+<a class="flex items-center gap-sm px-sm py-xs text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-colors font-label-lg text-label-lg" href="#">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+                    User Management
+                </a>
+</nav>
+</div>
+<div class="mt-auto border-t border-outline-variant pt-sm space-y-1">
+<a class="flex items-center gap-sm px-sm py-xs text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-colors font-label-lg text-label-lg" href="#">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+                Help
+            </a>
+<a class="flex items-center gap-sm px-sm py-xs text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-colors font-label-lg text-label-lg" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+                Logout
+            </a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 md:ml-64 flex flex-col">
+<!-- TopAppBar -->
+<header class="sticky top-0 w-full z-30 bg-surface-white flex justify-between items-center px-md py-xs shadow-sm max-w-container-max mx-auto">
+<div class="flex items-center gap-sm">
+<button class="md:hidden p-xs">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<div class="font-headline-sm text-headline-sm font-bold text-primary">Company Quiz Game</div>
+</div>
+<div class="flex items-center gap-md">
+<div class="hidden md:flex items-center gap-sm">
+<a class="text-primary font-bold border-b-2 border-primary pb-1 font-headline-sm text-headline-sm" href="#">My Quizzes</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-headline-sm text-headline-sm" href="#">Guidelines</a>
+</div>
+<div class="flex items-center gap-xs">
+<button class="p-xs text-on-surface-variant hover:text-primary transition-all">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="p-xs text-on-surface-variant hover:text-primary transition-all">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+<div class="w-10 h-10 rounded-full bg-surface-container overflow-hidden ml-xs border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a corporate administrator in a bright office setting, with soft natural lighting and a minimalist background, conveying a sense of authoritative focus and modern professionalism." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBlimuUvelHEh5ewV7vSDg50l8NqgSbtVBK9cQcO8k9_aNTXe_qPdfPUH-Ey8dcAsONnx9W65XXXoE3qDMKP1Fo04A40gIhwiq_uuaXHo2_xap8eUubc2gJuoctXclgYPRjjTQlqRlSk0CR4YuthQZBUiNmqQ0EIPH8vq4N_J0eXtXTMEqnf8XhkyTAAkqamsDMGEwswFrEbsP987gqDB-WC0bT6tFSBFvRIFHFkXPbyJoZr3F3RXWZv3tdKHl6lvmnnZsbyfZrHpFC"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Question Editor Content -->
+<section class="flex-1 p-md md:p-xl max-w-4xl mx-auto w-full">
+<!-- Breadcrumbs -->
+<nav class="flex items-center gap-xs mb-md text-outline font-label-md text-label-md">
+<a class="hover:text-primary transition-colors" href="#">My Quizzes</a>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<a class="hover:text-primary transition-colors" href="#">Q3 Performance Quiz</a>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<span class="text-on-surface font-semibold">Edit Question</span>
+</nav>
+<!-- Form Card -->
+<div class="bg-surface-white rounded-xl shadow-sm border border-outline-variant overflow-hidden">
+<div class="p-md md:p-xl">
+<div class="flex justify-between items-start mb-xl">
+<div>
+<h2 class="font-headline-md text-headline-md text-on-surface">Question Editor</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-xs">Update your question content and scoring parameters.</p>
+</div>
+<span class="px-sm py-xs bg-surface-container rounded-lg text-primary font-bold font-label-lg text-label-lg">Question 04/10</span>
+</div>
+<form class="space-y-xl">
+<!-- Question Text -->
+<div class="space-y-xs">
+<label class="font-label-lg text-label-lg text-on-surface flex justify-between" for="question_text">
+                                Question Text
+                                <span class="text-outline font-normal">84/250</span>
+</label>
+<textarea class="w-full rounded-xl border-outline-variant input-focus-effect p-sm font-body-lg text-body-lg transition-all" id="question_text" placeholder="Enter your question here..." rows="3">Which of these strategies was most effective for customer retention in Q2?</textarea>
+<div class="flex items-center gap-xs text-error font-label-md text-label-md">
+<span class="material-symbols-outlined text-[18px]">error</span>
+                                Question text cannot be empty.
+                            </div>
+</div>
+<!-- Answer Options -->
+<div class="space-y-md">
+<h3 class="font-label-lg text-label-lg text-on-surface">Answer Options (Select the correct one)</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+<!-- Option A -->
+<div class="relative group">
+<input checked="" class="hidden radio-custom" id="ans_a" name="correct_answer" type="radio"/>
+<label class="flex items-center gap-sm p-sm rounded-xl border border-outline-variant cursor-pointer transition-all hover:border-primary" for="ans_a">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center font-bold text-primary">A</div>
+<input class="bg-transparent border-none focus:ring-0 w-full p-0 font-body-md text-body-md" readonly="" type="text" value="Personalized email follow-ups"/>
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</label>
+</div>
+<!-- Option B -->
+<div class="relative group">
+<input class="hidden radio-custom" id="ans_b" name="correct_answer" type="radio"/>
+<label class="flex items-center gap-sm p-sm rounded-xl border border-outline-variant cursor-pointer transition-all hover:border-primary" for="ans_b">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center font-bold text-outline">B</div>
+<input class="bg-transparent border-none focus:ring-0 w-full p-0 font-body-md text-body-md" readonly="" type="text" value="Increased social media spend"/>
+<span class="material-symbols-outlined text-outline">radio_button_unchecked</span>
+</label>
+</div>
+<!-- Option C -->
+<div class="relative group">
+<input class="hidden radio-custom" id="ans_c" name="correct_answer" type="radio"/>
+<label class="flex items-center gap-sm p-sm rounded-xl border border-outline-variant cursor-pointer transition-all hover:border-primary" for="ans_c">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center font-bold text-outline">C</div>
+<input class="bg-transparent border-none focus:ring-0 w-full p-0 font-body-md text-body-md" placeholder="Enter option text..." type="text"/>
+<span class="material-symbols-outlined text-outline">radio_button_unchecked</span>
+</label>
+<div class="mt-xs text-error font-label-md text-label-md">Option C is required.</div>
+</div>
+<!-- Option D -->
+<div class="relative group">
+<input class="hidden radio-custom" id="ans_d" name="correct_answer" type="radio"/>
+<label class="flex items-center gap-sm p-sm rounded-xl border border-outline-variant cursor-pointer transition-all hover:border-primary" for="ans_d">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center font-bold text-outline">D</div>
+<input class="bg-transparent border-none focus:ring-0 w-full p-0 font-body-md text-body-md" readonly="" type="text" value="Flash sales promotions"/>
+<span class="material-symbols-outlined text-outline">radio_button_unchecked</span>
+</label>
+</div>
+</div>
+</div>
+<!-- Settings Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-xl pt-md">
+<!-- Time Limit -->
+<div class="space-y-xs">
+<label class="font-label-lg text-label-lg text-on-surface">Time Limit</label>
+<div class="flex gap-xs">
+<button class="flex-1 py-xs rounded-lg border border-outline-variant font-label-lg text-label-lg hover:border-primary hover:text-primary transition-all" type="button">10s</button>
+<button class="flex-1 py-xs rounded-lg border-2 border-primary bg-surface-container-low text-primary font-bold font-label-lg text-label-lg" type="button">15s</button>
+<button class="flex-1 py-xs rounded-lg border border-outline-variant font-label-lg text-label-lg hover:border-primary hover:text-primary transition-all" type="button">20s</button>
+<button class="flex-1 py-xs rounded-lg border border-outline-variant font-label-lg text-label-lg hover:border-primary hover:text-primary transition-all" type="button">30s</button>
+</div>
+</div>
+<!-- Base Score -->
+<div class="space-y-xs">
+<label class="font-label-lg text-label-lg text-on-surface" for="base_score">Base Score (Points)</label>
+<div class="relative">
+<input class="w-full rounded-xl border-outline-variant input-focus-effect p-sm font-headline-sm text-headline-sm text-primary font-bold pr-12" id="base_score" max="5000" min="0" step="100" type="number" value="1000"/>
+<div class="absolute right-sm top-1/2 -translate-y-1/2 text-outline">
+<span class="material-symbols-outlined">stars</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Actions -->
+<div class="flex flex-col md:flex-row items-center justify-end gap-sm pt-xl border-t border-outline-variant">
+<button class="w-full md:w-auto px-lg py-sm rounded-xl border-2 border-primary text-primary font-bold font-label-lg text-label-lg hover:bg-surface-container-low transition-all active:scale-95" type="button">
+                                Hủy
+                            </button>
+<button class="w-full md:w-auto px-lg py-sm rounded-xl bg-primary text-on-primary font-bold font-label-lg text-label-lg shadow-md hover:bg-primary-container hover:text-on-primary-container transition-all active:scale-95 flex items-center justify-center gap-xs" type="submit">
+<span class="material-symbols-outlined" style="font-variation-settings: 'wght' 600;">save</span>
+                                Lưu
+                            </button>
+</div>
+</form>
+</div>
+</div>
+<!-- Preview Card (Contextual) -->
+<div class="mt-xl p-md rounded-xl bg-soft-cream border border-secondary-container/20 flex items-start gap-md">
+<div class="bg-white p-xs rounded-lg shadow-sm">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">lightbulb</span>
+</div>
+<div>
+<h4 class="font-label-lg text-label-lg text-on-surface font-bold">Pro-tip for Engagement</h4>
+<p class="font-body-md text-body-md text-on-surface-variant mt-base">Questions with a 15-second timer see 20% higher engagement rates in corporate sessions. Keep answers concise!</p>
+</div>
+</div>
+</section>
+<!-- Spacer for Bottom Nav on Mobile -->
+<div class="h-24 md:hidden"></div>
+</main>
+<!-- BottomNavBar (Mobile Shell Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full bg-surface-white dark:bg-inverse-surface shadow-lg z-50 flex justify-around items-center px-4 py-2 pb-safe">
+<a class="flex flex-col items-center justify-center text-outline p-2 hover:text-primary transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-label-md text-label-md">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-outline p-2 hover:text-primary transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="apps">apps</span>
+<span class="font-label-md text-label-md">Join Game</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-xl p-2 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="history">history</span>
+<span class="font-label-md text-label-md">History</span>
+</a>
+<a class="flex flex-col items-center justify-center text-outline p-2 hover:text-primary transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-label-md text-label-md">Profile</span>
+</a>
+</nav>
+<script>
+        // Simple Interaction logic for radio cards
+        document.querySelectorAll('input[name="correct_answer"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                // Update all labels
+                document.querySelectorAll('input[name="correct_answer"]').forEach(r => {
+                    const label = r.nextElementSibling;
+                    const icon = label.querySelector('.material-symbols-outlined');
+                    const letterBox = label.querySelector('.w-10');
+                    
+                    if (r.checked) {
+                        icon.innerText = 'check_circle';
+                        icon.classList.remove('text-outline');
+                        icon.classList.add('text-primary');
+                        icon.style.fontVariationSettings = "'FILL' 1";
+                        letterBox.classList.remove('text-outline');
+                        letterBox.classList.add('text-primary');
+                    } else {
+                        icon.innerText = 'radio_button_unchecked';
+                        icon.classList.remove('text-primary');
+                        icon.classList.add('text-outline');
+                        icon.style.fontVariationSettings = "'FILL' 0";
+                        letterBox.classList.remove('text-primary');
+                        letterBox.classList.add('text-outline');
+                    }
+                });
+            });
+        });
+
+        // Time Limit Selection
+        document.querySelectorAll('button[type="button"]').forEach(btn => {
+            if(btn.innerText.includes('s')) {
+                btn.addEventListener('click', function() {
+                    this.parentElement.querySelectorAll('button').forEach(b => {
+                        b.classList.remove('border-2', 'border-primary', 'bg-surface-container-low', 'text-primary', 'font-bold');
+                        b.classList.add('border', 'border-outline-variant', 'font-normal');
+                    });
+                    this.classList.add('border-2', 'border-primary', 'bg-surface-container-low', 'text-primary', 'font-bold');
+                    this.classList.remove('border', 'border-outline-variant', 'font-normal');
+                });
+            }
+        });
+    </script>
+</body></html>

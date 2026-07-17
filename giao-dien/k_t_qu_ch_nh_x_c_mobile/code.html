@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+
+<html class="light" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-container": "#fcd069",
+                    "outline": "#727970",
+                    "primary-fixed-dim": "#a0d3a5",
+                    "inverse-primary": "#a0d3a5",
+                    "surface-container-low": "#ecf7e9",
+                    "on-primary": "#ffffff",
+                    "tertiary-fixed-dim": "#ecc15c",
+                    "on-error": "#ffffff",
+                    "on-tertiary-fixed": "#251a00",
+                    "error": "#ba1a1a",
+                    "on-secondary-fixed": "#311300",
+                    "on-secondary-container": "#5c2900",
+                    "surface-container-lowest": "#ffffff",
+                    "soft-cream": "#FFF4A4",
+                    "on-surface-variant": "#414941",
+                    "error-red": "#D92D20",
+                    "on-primary-fixed-variant": "#22502d",
+                    "on-surface": "#151e15",
+                    "inverse-on-surface": "#eaf4e6",
+                    "secondary-fixed-dim": "#ffb689",
+                    "surface-white": "#FFFFFF",
+                    "surface-tint": "#3a6843",
+                    "on-primary-container": "#afe2b3",
+                    "on-secondary": "#ffffff",
+                    "secondary": "#984800",
+                    "surface-bright": "#f2fcee",
+                    "outline-variant": "#c1c9be",
+                    "background": "#f2fcee",
+                    "inverse-surface": "#2a332a",
+                    "on-error-container": "#93000a",
+                    "on-secondary-fixed-variant": "#733500",
+                    "success-green": "#2E7D32",
+                    "secondary-fixed": "#ffdbc8",
+                    "on-tertiary-fixed-variant": "#5b4300",
+                    "app-bg": "#F8FAF8",
+                    "surface-container-highest": "#dbe5d8",
+                    "on-background": "#151e15",
+                    "tertiary-fixed": "#ffdf9c",
+                    "secondary-container": "#fc7d05",
+                    "error-container": "#ffdad6",
+                    "primary-fixed": "#bcefc0",
+                    "surface-dim": "#d3ddcf",
+                    "surface-variant": "#dbe5d8",
+                    "primary": "#204e2b",
+                    "surface-container-high": "#e1ebdd",
+                    "on-tertiary": "#ffffff",
+                    "tertiary": "#584100",
+                    "primary-container": "#386641",
+                    "tertiary-container": "#755800",
+                    "border-subtle": "#D8E0D8",
+                    "surface-container": "#e7f1e3",
+                    "on-primary-fixed": "#00210a",
+                    "surface": "#f2fcee"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "16px",
+                    "xl": "24px",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "xs": "8px",
+                    "container-max": "1280px",
+                    "md": "24px",
+                    "sm": "16px",
+                    "gutter": "16px",
+                    "base": "4px",
+                    "lg": "48px",
+                    "xl": "64px"
+            },
+            "fontFamily": {
+                    "body-md": ["Be Vietnam Pro"],
+                    "headline-lg": ["Be Vietnam Pro"],
+                    "headline-md": ["Be Vietnam Pro"],
+                    "label-lg": ["Be Vietnam Pro"],
+                    "headline-lg-mobile": ["Be Vietnam Pro"],
+                    "headline-sm": ["Be Vietnam Pro"],
+                    "label-md": ["Be Vietnam Pro"],
+                    "display-lg": ["Be Vietnam Pro"],
+                    "body-lg": ["Be Vietnam Pro"],
+                    "display-lg-mobile": ["Be Vietnam Pro"]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        body { font-family: 'Be Vietnam Pro', sans-serif; background-color: #F8FAF8; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .correct-pulse {
+            animation: pulse-green 2s infinite;
+        }
+        @keyframes pulse-green {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(46, 125, 50, 0.4); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 20px rgba(46, 125, 50, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(46, 125, 50, 0); }
+        }
+        .confetti-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-app-bg text-on-surface antialiased overflow-hidden">
+<!-- Success Background Animation -->
+<div class="fixed inset-0 z-0">
+
+</div>
+<!-- Main Canvas -->
+<main class="relative z-10 flex flex-col items-center justify-center min-h-screen px-sm py-lg">
+<!-- Result Card Container -->
+<div class="w-full max-w-md bg-soft-cream rounded-xl shadow-lg p-md flex flex-col items-center space-y-md border-2 border-success-green/20">
+<!-- Success Icon Section -->
+<div class="relative">
+<div class="w-24 h-24 bg-success-green rounded-full flex items-center justify-center correct-pulse shadow-xl">
+<span class="material-symbols-outlined text-surface-white text-5xl" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+</div>
+<!-- Header Text -->
+<div class="text-center space-y-xs">
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-success-green tracking-tight">Chính xác!</h1>
+<div class="inline-flex items-center bg-white/60 px-sm py-base rounded-full border border-success-green/10">
+<span class="font-label-lg text-label-lg text-success-green font-bold">+850 điểm</span>
+</div>
+</div>
+<!-- Score Details Bento -->
+<div class="w-full grid grid-cols-2 gap-sm pt-xs">
+<!-- Total Points -->
+<div class="bg-white rounded-lg p-sm shadow-sm flex flex-col items-center justify-center space-y-1">
+<span class="font-label-md text-label-md text-outline">Tổng điểm</span>
+<span class="font-headline-sm text-headline-sm text-primary">4.250</span>
+</div>
+<!-- Current Rank -->
+<div class="bg-white rounded-lg p-sm shadow-sm flex flex-col items-center justify-center space-y-1">
+<span class="font-label-md text-label-md text-outline">Xếp hạng</span>
+<div class="flex items-center space-y-0">
+<span class="material-symbols-outlined text-secondary-container text-xl mr-1" style="font-variation-settings: 'FILL' 1;">leaderboard</span>
+<span class="font-headline-sm text-headline-sm text-primary">6</span>
+</div>
+</div>
+</div>
+<!-- Performance Card -->
+<div class="w-full bg-primary-container rounded-lg p-sm flex items-center justify-between">
+<div class="flex items-center">
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-white/20 mr-sm">
+<img class="w-full h-full object-cover" data-alt="A professional corporate portrait of a confident team member, high-end studio lighting with soft shadows, set against a minimalist forest green background that aligns with a premium business aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAhCVhssJGjbyGtgIoCKzJieZLcozQ3AEknN_cw27sX8wx6FYcUt-W_nJZtFkluwI_rXDOdbskTsJcM_iPfM_aniLo0SAYR39YPFhYifiViPaOhkkkyURwhAW8q45mj8czgZywjhB1VJqPp7X1YO5RJqu_2rchbP-ent9Qw7LCGPr1-Zsc6iS45aQOu5LOeHc6k9kYBT1m_qV5seCFQfduJiP4ApONpGFQ45QlUIYfi74_Q_BkWQ3dPFA5wvjV_jVLHGTkFHnAWSK42"/>
+</div>
+<div>
+<p class="font-label-md text-label-md text-on-primary-container opacity-80">Đang dẫn đầu</p>
+<p class="font-label-lg text-label-lg text-surface-white">Minh Quang</p>
+</div>
+</div>
+<div class="text-right">
+<p class="font-headline-sm text-headline-sm text-soft-cream">5.100</p>
+</div>
+</div>
+<!-- Action Button -->
+<button class="w-full h-[56px] bg-secondary-container text-surface-white font-label-lg text-label-lg rounded-lg shadow-lg active:scale-95 transition-transform flex items-center justify-center group">
+                Câu hỏi tiếp theo
+                <span class="material-symbols-outlined ml-xs group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+</div>
+<!-- Progress Footer (Time to next question) -->
+<div class="mt-lg w-full max-w-xs flex flex-col items-center">
+<p class="font-label-md text-label-md text-outline mb-xs">Tự động chuyển sau 5s</p>
+<div class="w-full h-2 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-primary transition-all duration-100 ease-linear" id="progress-bar" style="width: 100%;"></div>
+</div>
+</div>
+</main>
+<!-- Navigation Shell (BottomNavBar Context) -->
+<!-- Suppressed as per Task-Focused screen rules -->
+<script>
+        // Simple countdown logic for the progress bar
+        let timeLeft = 100;
+        const progressBar = document.getElementById('progress-bar');
+        const interval = setInterval(() => {
+            timeLeft -= 2;
+            if (progressBar) {
+                progressBar.style.width = timeLeft + '%';
+            }
+            if (timeLeft <= 0) {
+                clearInterval(interval);
+            }
+        }, 100);
+
+        // Particle confetti for success
+        function createConfetti() {
+            const colors = ['#2E7D32', '#fc7d05', '#FFF4A4', '#386641'];
+            const container = document.body;
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.style.position = 'absolute';
+                confetti.style.width = Math.random() * 10 + 5 + 'px';
+                confetti.style.height = Math.random() * 10 + 5 + 'px';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.top = '-10px';
+                confetti.style.zIndex = '5';
+                confetti.style.borderRadius = '2px';
+                confetti.style.opacity = Math.random();
+                container.appendChild(confetti);
+
+                const animation = confetti.animate([
+                    { transform: 'translateY(0) rotate(0deg)', opacity: 1 },
+                    { transform: `translateY(100vh) rotate(${Math.random() * 360}deg)`, opacity: 0 }
+                ], {
+                    duration: Math.random() * 2000 + 3000,
+                    easing: 'cubic-bezier(0, .9, .57, 1)'
+                });
+
+                animation.onfinish = () => confetti.remove();
+            }
+        }
+        
+        // Trigger confetti on load
+        window.addEventListener('DOMContentLoaded', createConfetti);
+    </script>
+</body></html>

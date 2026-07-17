@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+
+<html class="light" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Company Quiz Game - Host Lobby</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+        }
+        .bg-forest-gradient {
+            background: linear-gradient(135deg, #204e2b 0%, #15331c 100%);
+        }
+        .player-pill-animation {
+            animation: fadeInScale 0.4s ease-out forwards;
+        }
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+        @keyframes floating {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-container": "#fcd069",
+                        "outline": "#727970",
+                        "primary-fixed-dim": "#a0d3a5",
+                        "inverse-primary": "#a0d3a5",
+                        "surface-container-low": "#ecf7e9",
+                        "on-primary": "#ffffff",
+                        "tertiary-fixed-dim": "#ecc15c",
+                        "on-error": "#ffffff",
+                        "on-tertiary-fixed": "#251a00",
+                        "error": "#ba1a1a",
+                        "on-secondary-fixed": "#311300",
+                        "on-secondary-container": "#5c2900",
+                        "surface-container-lowest": "#ffffff",
+                        "soft-cream": "#FFF4A4",
+                        "on-surface-variant": "#414941",
+                        "error-red": "#D92D20",
+                        "on-primary-fixed-variant": "#22502d",
+                        "on-surface": "#151e15",
+                        "inverse-on-surface": "#eaf4e6",
+                        "secondary-fixed-dim": "#ffb689",
+                        "surface-white": "#FFFFFF",
+                        "surface-tint": "#3a6843",
+                        "on-primary-container": "#afe2b3",
+                        "on-secondary": "#ffffff",
+                        "secondary": "#984800",
+                        "surface-bright": "#f2fcee",
+                        "outline-variant": "#c1c9be",
+                        "background": "#f2fcee",
+                        "inverse-surface": "#2a332a",
+                        "on-error-container": "#93000a",
+                        "on-secondary-fixed-variant": "#733500",
+                        "success-green": "#2E7D32",
+                        "secondary-fixed": "#ffdbc8",
+                        "on-tertiary-fixed-variant": "#5b4300",
+                        "app-bg": "#F8FAF8",
+                        "surface-container-highest": "#dbe5d8",
+                        "on-background": "#151e15",
+                        "tertiary-fixed": "#ffdf9c",
+                        "secondary-container": "#fc7d05",
+                        "error-container": "#ffdad6",
+                        "primary-fixed": "#bcefc0",
+                        "surface-dim": "#d3ddcf",
+                        "surface-variant": "#dbe5d8",
+                        "primary": "#204e2b",
+                        "surface-container-high": "#e1ebdd",
+                        "on-tertiary": "#ffffff",
+                        "tertiary": "#584100",
+                        "primary-container": "#386641",
+                        "tertiary-container": "#755800",
+                        "border-subtle": "#D8E0D8",
+                        "surface-container": "#e7f1e3",
+                        "on-primary-fixed": "#00210a",
+                        "surface": "#f2fcee"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xs": "8px",
+                        "container-max": "1280px",
+                        "md": "24px",
+                        "sm": "16px",
+                        "gutter": "16px",
+                        "base": "4px",
+                        "lg": "48px",
+                        "xl": "64px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Be Vietnam Pro"],
+                        "headline-lg": ["Be Vietnam Pro"],
+                        "headline-md": ["Be Vietnam Pro"],
+                        "label-lg": ["Be Vietnam Pro"],
+                        "headline-sm": ["Be Vietnam Pro"],
+                        "label-md": ["Be Vietnam Pro"],
+                        "display-lg": ["Be Vietnam Pro"],
+                        "body-lg": ["Be Vietnam Pro"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-lg": ["44px", {"lineHeight": "52px", "fontWeight": "700"}],
+                        "headline-md": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
+                        "label-lg": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                        "headline-sm": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                        "display-lg": ["72px", {"lineHeight": "90px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-forest-gradient text-on-primary min-h-screen font-body-md selection:bg-secondary selection:text-white overflow-hidden">
+<!-- Header / Brand Section -->
+<header class="flex justify-between items-center px-xl py-md">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary-fixed-dim scale-125" data-icon="quiz">quiz</span>
+<h1 class="font-headline-sm text-headline-sm tracking-tight text-white">Company Quiz Game</h1>
+</div>
+<div class="flex items-center gap-sm bg-white/10 px-md py-xs rounded-full backdrop-blur-md border border-white/20">
+<span class="material-symbols-outlined text-soft-cream" data-icon="group">group</span>
+<span class="font-label-lg text-label-lg">42 / 60 người đã tham gia</span>
+</div>
+</header>
+<!-- Main Content Area: Designed for Projector Visibility -->
+<main class="max-w-container-max mx-auto px-lg h-[calc(100vh-200px)] flex flex-col items-center justify-center gap-xl relative">
+<!-- Background Atmospheric Element (Optional Shader) -->
+<div class="absolute inset-0 -z-10 opacity-20 pointer-events-none">
+<!-- Space for shader if needed, using simple css pattern for now -->
+<div class="absolute inset-0" style="background-image: radial-gradient(circle at 2px 2px, rgba(255,255,255,0.1) 1px, transparent 0); background-size: 40px 40px;"></div>
+</div>
+<div class="grid grid-cols-12 gap-xl w-full items-center">
+<!-- Left: Connection Info -->
+<div class="col-span-12 lg:col-span-5 flex flex-col items-center lg:items-start text-center lg:text-left gap-md">
+<div class="bg-white/10 p-sm rounded-xl inline-flex items-center gap-xs">
+<span class="material-symbols-outlined text-soft-cream" data-icon="link">link</span>
+<p class="font-label-lg text-label-lg text-white/90">Truy cập website và nhập mã phòng</p>
+</div>
+<div class="space-y-xs">
+<h2 class="font-display-lg text-[120px] leading-tight text-white drop-shadow-2xl tracking-widest font-bold">888 666</h2>
+<p class="font-headline-md text-headline-md text-soft-cream/80">QUIZ-PORTAL.COMPANY.COM</p>
+</div>
+<div class="flex gap-md mt-md">
+<button class="h-[64px] px-xl bg-secondary-container text-white font-headline-sm text-headline-sm rounded-xl shadow-lg hover:scale-105 active:scale-95 transition-all duration-200 flex items-center gap-sm">
+<span>Bắt đầu trò chơi</span>
+<span class="material-symbols-outlined" data-icon="play_arrow">play_arrow</span>
+</button>
+<button class="h-[64px] px-xl border-2 border-white/30 text-white font-headline-sm text-headline-sm rounded-xl hover:bg-white/10 active:scale-95 transition-all duration-200">
+                        Hủy phòng
+                    </button>
+</div>
+</div>
+<!-- Middle: QR Code (White Card) -->
+<div class="hidden lg:flex col-span-2 justify-center">
+<div class="bg-surface-white p-md rounded-[24px] shadow-2xl floating">
+<div class="w-[180px] h-[180px] bg-cover bg-center rounded-lg" data-alt="A clean high-contrast black and white QR code centered on a white card, designed for a modern professional corporate application with minimalist aesthetics and crisp edges." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAKmPTxTeRPk4jGhyMNGeXervrwzdsOc8VWJtJCI3zmpRZ7AY1F02eMofSGG2w4toh667ImDkc0yOeLRnik-6cjwVYW8lJIc2-tEvk-J4WeIJT7FMbWc6-eEZ7bYRCQkyettnEZCvGhelCsZYeVIzxo_7PG3Yu-xJxpHOE4o40WIz3I-Bi3mDeyyqmNUoeQjz41Q0EPJyuSOVo7qOYeUNfNAJTJqn7QP6gHj4A6xqLe8uy2T5RXN2Ncf1wdgaFazTYSbod7HO2GbOYF')"></div>
+<p class="text-on-surface font-label-md text-label-md mt-sm text-center">Quét để tham gia</p>
+</div>
+</div>
+<!-- Right: Player Grid (Bento Style) -->
+<div class="col-span-12 lg:col-span-5 h-full">
+<div class="bg-white/5 rounded-[32px] p-lg border border-white/10 backdrop-blur-sm h-[500px] overflow-hidden relative">
+<h3 class="font-label-lg text-label-lg text-white/60 mb-md uppercase tracking-widest">Đang chờ người chơi...</h3>
+<div class="flex flex-wrap gap-sm content-start overflow-y-auto h-[380px] pr-xs custom-scrollbar" id="player-grid">
+<!-- Initial set of players -->
+<span class="player-pill-animation px-md py-xs bg-soft-cream text-primary font-label-lg text-label-lg rounded-full shadow-sm">Nguyễn Văn A</span>
+<span class="player-pill-animation px-md py-xs bg-soft-cream text-primary font-label-lg text-label-lg rounded-full shadow-sm">Minh Trần</span>
+<span class="player-pill-animation px-md py-xs bg-soft-cream text-primary font-label-lg text-label-lg rounded-full shadow-sm">Linh Chi ⚡</span>
+<span class="player-pill-animation px-md py-xs bg-soft-cream text-primary font-label-lg text-label-lg rounded-full shadow-sm">Quốc Bảo</span>
+<span class="player-pill-animation px-md py-xs bg-soft-cream text-primary font-label-lg text-label-lg rounded-full shadow-sm">Hương Mai</span>
+<span class="player-pill-animation px-md py-xs bg-soft-cream text-primary font-label-lg text-label-lg rounded-full shadow-sm">Phúc Lâm</span>
+<span class="player-pill-animation px-md py-xs bg-soft-cream text-primary font-label-lg text-label-lg rounded-full shadow-sm">Thanh Hằng</span>
+<span class="player-pill-animation px-md py-xs bg-soft-cream text-primary font-label-lg text-label-lg rounded-full shadow-sm">Duy Mạnh 🔥</span>
+<span class="player-pill-animation px-md py-xs bg-soft-cream text-primary font-label-lg text-label-lg rounded-full shadow-sm">An Nhiên</span>
+<span class="player-pill-animation px-md py-xs bg-soft-cream text-primary font-label-lg text-label-lg rounded-full shadow-sm">Thành Đạt</span>
+<span class="player-pill-animation px-md py-xs bg-soft-cream text-primary font-label-lg text-label-lg rounded-full shadow-sm">Phương Thảo</span>
+<span class="player-pill-animation px-md py-xs bg-soft-cream text-primary font-label-lg text-label-lg rounded-full shadow-sm">Gia Huy</span>
+<span class="player-pill-animation px-md py-xs bg-soft-cream text-primary font-label-lg text-label-lg rounded-full shadow-sm">Tuấn Kiệt</span>
+<span class="player-pill-animation px-md py-xs bg-soft-cream text-primary font-label-lg text-label-lg rounded-full shadow-sm">Yến Nhi</span>
+<span class="player-pill-animation px-md py-xs bg-soft-cream text-primary font-label-lg text-label-lg rounded-full shadow-sm">Hải Đăng ⚓</span>
+<span class="player-pill-animation px-md py-xs bg-soft-cream text-primary font-label-lg text-label-lg rounded-full shadow-sm">Thùy Dương</span>
+</div>
+<!-- Fading Bottom Effect -->
+<div class="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-[#1b4425] to-transparent pointer-events-none"></div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer Settings Bar -->
+<footer class="fixed bottom-0 left-0 w-full px-xl py-md flex justify-between items-center bg-black/10 backdrop-blur-sm">
+<div class="flex gap-lg">
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-white/50" data-icon="music_note">music_note</span>
+<span class="font-label-md text-label-md text-white/70">Bật nhạc nền</span>
+</div>
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-white/50" data-icon="fullscreen">fullscreen</span>
+<span class="font-label-md text-label-md text-white/70">Toàn màn hình</span>
+</div>
+</div>
+<div class="flex gap-sm">
+<span class="material-symbols-outlined text-white/50 cursor-pointer hover:text-white" data-icon="settings">settings</span>
+<span class="material-symbols-outlined text-white/50 cursor-pointer hover:text-white" data-icon="help">help</span>
+</div>
+</footer>
+<script>
+        // Simulate real-time players joining
+        const nicknames = ["Minh Anh", "Thế Vinh", "Khánh Huyền", "Đức Trọng", "Ngọc Ánh", "Hữu Phước", "Thảo Vy", "Quang Khải"];
+        const grid = document.getElementById('player-grid');
+        
+        setInterval(() => {
+            if (grid.children.length < 42) {
+                const name = nicknames[Math.floor(Math.random() * nicknames.length)];
+                const span = document.createElement('span');
+                span.className = 'player-pill-animation px-md py-xs bg-soft-cream text-primary font-label-lg text-label-lg rounded-full shadow-sm';
+                span.innerText = name;
+                grid.appendChild(span);
+                
+                // Keep scroll at bottom
+                grid.scrollTop = grid.scrollHeight;
+            }
+        }, 2000);
+    </script>
+</body></html>

@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Kết Quả Câu Hỏi - Company Quiz Game</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-container": "#fcd069",
+                    "outline": "#727970",
+                    "primary-fixed-dim": "#a0d3a5",
+                    "inverse-primary": "#a0d3a5",
+                    "surface-container-low": "#ecf7e9",
+                    "on-primary": "#ffffff",
+                    "tertiary-fixed-dim": "#ecc15c",
+                    "on-error": "#ffffff",
+                    "on-tertiary-fixed": "#251a00",
+                    "error": "#ba1a1a",
+                    "on-secondary-fixed": "#311300",
+                    "on-secondary-container": "#5c2900",
+                    "surface-container-lowest": "#ffffff",
+                    "soft-cream": "#FFF4A4",
+                    "on-surface-variant": "#414941",
+                    "error-red": "#D92D20",
+                    "on-primary-fixed-variant": "#22502d",
+                    "on-surface": "#151e15",
+                    "inverse-on-surface": "#eaf4e6",
+                    "secondary-fixed-dim": "#ffb689",
+                    "surface-white": "#FFFFFF",
+                    "surface-tint": "#3a6843",
+                    "on-primary-container": "#afe2b3",
+                    "on-secondary": "#ffffff",
+                    "secondary": "#984800",
+                    "surface-bright": "#f2fcee",
+                    "outline-variant": "#c1c9be",
+                    "background": "#f2fcee",
+                    "inverse-surface": "#2a332a",
+                    "on-error-container": "#93000a",
+                    "on-secondary-fixed-variant": "#733500",
+                    "success-green": "#2E7D32",
+                    "secondary-fixed": "#ffdbc8",
+                    "on-tertiary-fixed-variant": "#5b4300",
+                    "app-bg": "#F8FAF8",
+                    "surface-container-highest": "#dbe5d8",
+                    "on-background": "#151e15",
+                    "tertiary-fixed": "#ffdf9c",
+                    "secondary-container": "#fc7d05",
+                    "error-container": "#ffdad6",
+                    "primary-fixed": "#bcefc0",
+                    "surface-dim": "#d3ddcf",
+                    "surface-variant": "#dbe5d8",
+                    "primary": "#204e2b",
+                    "surface-container-high": "#e1ebdd",
+                    "on-tertiary": "#ffffff",
+                    "tertiary": "#584100",
+                    "primary-container": "#386641",
+                    "tertiary-container": "#755800",
+                    "border-subtle": "#D8E0D8",
+                    "surface-container": "#e7f1e3",
+                    "on-primary-fixed": "#00210a",
+                    "surface": "#f2fcee"
+            },
+            "borderRadius": {
+                    "DEFAULT": "16px",
+                    "lg": "16px",
+                    "xl": "24px",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "xs": "8px",
+                    "container-max": "1280px",
+                    "md": "24px",
+                    "sm": "16px",
+                    "gutter": "16px",
+                    "base": "4px",
+                    "lg": "48px",
+                    "xl": "64px"
+            },
+            "fontFamily": {
+                    "body-md": ["Be Vietnam Pro"],
+                    "headline-lg": ["Be Vietnam Pro"],
+                    "headline-md": ["Be Vietnam Pro"],
+                    "label-lg": ["Be Vietnam Pro"],
+                    "headline-sm": ["Be Vietnam Pro"],
+                    "label-md": ["Be Vietnam Pro"],
+                    "display-lg": ["Be Vietnam Pro"],
+                    "body-lg": ["Be Vietnam Pro"]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .bar-grow {
+            transition: height 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .correct-pulse {
+            animation: pulse-border 2s infinite;
+        }
+        @keyframes pulse-border {
+            0% { box-shadow: 0 0 0 0px rgba(46, 125, 50, 0.4); }
+            70% { box-shadow: 0 0 0 15px rgba(46, 125, 50, 0); }
+            100% { box-shadow: 0 0 0 0px rgba(46, 125, 50, 0); }
+        }
+    </style>
+</head>
+<body class="bg-app-bg text-on-surface font-body-md min-h-screen">
+<!-- TopAppBar -->
+<header class="sticky top-0 w-full z-50 flex justify-between items-center px-md py-xs max-w-container-max mx-auto bg-surface-white dark:bg-inverse-surface shadow-sm">
+<div class="flex items-center gap-sm">
+<span class="text-headline-sm font-headline-sm font-bold text-primary dark:text-inverse-primary">Company Quiz Game</span>
+<div class="h-6 w-px bg-outline-variant ml-2"></div>
+<span class="font-label-lg text-label-lg text-on-surface-variant px-3 py-1 bg-surface-container rounded-full">PIN: 882 109</span>
+</div>
+<div class="flex items-center gap-md">
+<button class="flex items-center gap-xs hover:text-primary transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="flex items-center gap-xs hover:text-primary transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-bold">
+                AD
+            </div>
+</div>
+</header>
+<main class="max-w-container-max mx-auto px-md py-lg flex flex-col md:flex-row gap-lg h-[calc(100vh-80px)] overflow-hidden">
+<!-- Left: Side Bar (Active Nav) -->
+<nav class="hidden lg:flex flex-col w-64 h-full bg-surface-container-low border-r border-outline-variant p-sm gap-xs rounded-xl shrink-0">
+<div class="flex flex-col gap-base mb-lg px-2">
+<span class="font-headline-md text-headline-md font-bold text-primary">Admin Console</span>
+<span class="font-label-md text-label-md text-on-surface-variant">Corporate HQ</span>
+</div>
+<a class="flex items-center gap-sm p-3 bg-primary-container text-on-primary-container font-bold rounded-lg transition-all active:scale-95" href="#">
+<span class="material-symbols-outlined">sensors</span>
+<span class="font-label-lg text-label-lg">Live Sessions</span>
+</a>
+<a class="flex items-center gap-sm p-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-lg text-label-lg">Dashboard</span>
+</a>
+<a class="flex items-center gap-sm p-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">quiz</span>
+<span class="font-label-lg text-label-lg">My Quizzes</span>
+</a>
+<a class="flex items-center gap-sm p-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-lg text-label-lg">Reports</span>
+</a>
+<div class="mt-auto pt-sm border-t border-outline-variant flex flex-col gap-xs">
+<a class="flex items-center gap-sm p-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">help</span>
+<span class="font-label-lg text-label-lg">Help</span>
+</a>
+<a class="flex items-center gap-sm p-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-label-lg text-label-lg">Logout</span>
+</a>
+</div>
+</nav>
+<!-- Center: Result Dashboard -->
+<div class="flex-1 flex flex-col gap-md overflow-y-auto pr-2">
+<!-- Question Summary -->
+<div class="bg-surface-white rounded-xl p-md shadow-sm border border-outline-variant/30">
+<div class="flex justify-between items-start mb-sm">
+<span class="bg-primary text-white px-3 py-1 rounded-full font-label-md text-label-md">Câu hỏi 4/10</span>
+<span class="text-on-surface-variant font-label-md">Thời gian đã hết</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-on-surface">Giá trị cốt lõi nào của công ty nhấn mạnh sự đổi mới không ngừng?</h2>
+</div>
+<!-- Visualization: Bar Chart -->
+<div class="bg-surface-white rounded-xl p-md shadow-sm border border-outline-variant/30 flex-1 min-h-[400px] flex flex-col">
+<h3 class="font-headline-sm text-headline-sm mb-lg flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">bar_chart</span>
+                    Phân phối câu trả lời
+                </h3>
+<div class="flex-1 flex items-end justify-around gap-md px-lg pb-lg">
+<!-- Option A -->
+<div class="flex flex-col items-center w-full max-w-[120px] group">
+<span class="mb-2 font-bold text-on-surface-variant">12</span>
+<div class="w-full bg-outline-variant/20 rounded-t-lg relative flex flex-col justify-end overflow-hidden" style="height: 120px;">
+<div class="bar-grow bg-outline-variant w-full" style="height: 100%;"></div>
+</div>
+<div class="mt-4 flex flex-col items-center">
+<span class="w-8 h-8 rounded-full bg-outline-variant text-white flex items-center justify-center font-bold mb-1">A</span>
+<span class="text-label-md text-on-surface-variant text-center leading-tight">Chính trực</span>
+</div>
+</div>
+<!-- Option B (Correct) -->
+<div class="flex flex-col items-center w-full max-w-[120px] group">
+<span class="mb-2 font-bold text-success-green">45</span>
+<div class="w-full bg-success-green/10 rounded-t-lg relative flex flex-col justify-end overflow-hidden correct-pulse" style="height: 300px;">
+<div class="bar-grow bg-success-green w-full relative" style="height: 100%;">
+<div class="absolute inset-0 flex items-center justify-center text-white">
+<span class="material-symbols-outlined scale-150" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+</div>
+</div>
+<div class="mt-4 flex flex-col items-center">
+<span class="w-8 h-8 rounded-full bg-success-green text-white flex items-center justify-center font-bold mb-1 shadow-md">B</span>
+<span class="text-label-md text-success-green font-bold text-center leading-tight">Sáng tạo</span>
+</div>
+</div>
+<!-- Option C -->
+<div class="flex flex-col items-center w-full max-w-[120px] group">
+<span class="mb-2 font-bold text-on-surface-variant">8</span>
+<div class="w-full bg-outline-variant/20 rounded-t-lg relative flex flex-col justify-end overflow-hidden" style="height: 80px;">
+<div class="bar-grow bg-outline-variant w-full" style="height: 100%;"></div>
+</div>
+<div class="mt-4 flex flex-col items-center">
+<span class="w-8 h-8 rounded-full bg-outline-variant text-white flex items-center justify-center font-bold mb-1">C</span>
+<span class="text-label-md text-on-surface-variant text-center leading-tight">Đoàn kết</span>
+</div>
+</div>
+<!-- Option D -->
+<div class="flex flex-col items-center w-full max-w-[120px] group">
+<span class="mb-2 font-bold text-on-surface-variant">5</span>
+<div class="w-full bg-outline-variant/20 rounded-t-lg relative flex flex-col justify-end overflow-hidden" style="height: 50px;">
+<div class="bar-grow bg-outline-variant w-full" style="height: 100%;"></div>
+</div>
+<div class="mt-4 flex flex-col items-center">
+<span class="w-8 h-8 rounded-full bg-outline-variant text-white flex items-center justify-center font-bold mb-1">D</span>
+<span class="text-label-md text-on-surface-variant text-center leading-tight">Tốc độ</span>
+</div>
+</div>
+</div>
+</div>
+<!-- CTA Action -->
+<div class="flex justify-end pt-md pb-xl">
+<button class="bg-secondary-container hover:bg-secondary text-white font-bold px-xl py-md rounded-xl h-14 flex items-center gap-sm shadow-lg transition-all active:scale-95 group">
+<span class="font-headline-sm">Câu tiếp theo</span>
+<span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Right: Leaderboard Side Panel -->
+<aside class="w-full md:w-80 flex flex-col gap-md">
+<div class="bg-surface-white rounded-xl p-md shadow-md border border-outline-variant/30 flex flex-col flex-1">
+<h3 class="font-headline-sm text-headline-sm mb-md flex items-center gap-2">
+<span class="material-symbols-outlined text-on-tertiary-container" style="font-variation-settings: 'FILL' 1;">trophy</span>
+                    Top 5 Bảng Xếp Hạng
+                </h3>
+<div class="flex flex-col gap-sm">
+<!-- Rank 1 -->
+<div class="flex items-center gap-sm p-3 bg-soft-cream rounded-xl border-2 border-secondary-container shadow-sm">
+<div class="w-10 h-10 rounded-full bg-secondary-container text-white flex items-center justify-center font-bold text-label-lg shrink-0">1</div>
+<div class="flex-1 overflow-hidden">
+<p class="font-bold text-on-surface truncate">Nguyễn Văn A</p>
+<p class="text-label-md text-secondary font-semibold">3,850 pts</p>
+</div>
+<span class="material-symbols-outlined text-secondary-container" style="font-variation-settings: 'FILL' 1;">trending_up</span>
+</div>
+<!-- Rank 2 -->
+<div class="flex items-center gap-sm p-3 bg-surface-container rounded-xl border border-outline-variant/20">
+<div class="w-10 h-10 rounded-full bg-soft-cream text-on-surface flex items-center justify-center font-bold text-label-lg shrink-0">2</div>
+<div class="flex-1 overflow-hidden">
+<p class="font-semibold text-on-surface truncate">Trần Thị B</p>
+<p class="text-label-md text-on-surface-variant">3,620 pts</p>
+</div>
+</div>
+<!-- Rank 3 -->
+<div class="flex items-center gap-sm p-3 bg-surface-container rounded-xl border border-outline-variant/20">
+<div class="w-10 h-10 rounded-full bg-soft-cream text-on-surface flex items-center justify-center font-bold text-label-lg shrink-0">3</div>
+<div class="flex-1 overflow-hidden">
+<p class="font-semibold text-on-surface truncate">Lê Minh C</p>
+<p class="text-label-md text-on-surface-variant">3,590 pts</p>
+</div>
+</div>
+<!-- Rank 4 -->
+<div class="flex items-center gap-sm p-3 bg-surface-container rounded-xl border border-outline-variant/20">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest text-on-surface flex items-center justify-center font-bold text-label-lg shrink-0">4</div>
+<div class="flex-1 overflow-hidden">
+<p class="font-semibold text-on-surface truncate">Hoàng Anh D</p>
+<p class="text-label-md text-on-surface-variant">3,410 pts</p>
+</div>
+</div>
+<!-- Rank 5 -->
+<div class="flex items-center gap-sm p-3 bg-surface-container rounded-xl border border-outline-variant/20">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest text-on-surface flex items-center justify-center font-bold text-label-lg shrink-0">5</div>
+<div class="flex-1 overflow-hidden">
+<p class="font-semibold text-on-surface truncate">Phạm Thúy E</p>
+<p class="text-label-md text-on-surface-variant">3,280 pts</p>
+</div>
+</div>
+</div>
+<!-- Admin Hint -->
+<div class="mt-auto pt-lg px-2">
+<div class="bg-primary/5 p-sm rounded-xl flex gap-sm items-start">
+<span class="material-symbols-outlined text-primary">lightbulb</span>
+<p class="text-label-md text-on-surface-variant leading-tight">Hầu hết người chơi đã trả lời đúng câu này. Có vẻ kiến thức về văn hóa công ty rất tốt!</p>
+</div>
+</div>
+</div>
+</aside>
+</main>
+<!-- Bottom Nav (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full flex justify-around items-center px-4 py-2 pb-safe bg-surface-white dark:bg-inverse-surface shadow-lg z-50">
+<div class="flex flex-col items-center justify-center text-outline p-2">
+<span class="material-symbols-outlined">home</span>
+<span class="text-label-md font-label-md">Home</span>
+</div>
+<div class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-xl p-2 px-4">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">sensors</span>
+<span class="text-label-md font-label-md">Live</span>
+</div>
+<div class="flex flex-col items-center justify-center text-outline p-2">
+<span class="material-symbols-outlined">history</span>
+<span class="text-label-md font-label-md">History</span>
+</div>
+<div class="flex flex-col items-center justify-center text-outline p-2">
+<span class="material-symbols-outlined">person</span>
+<span class="text-label-md font-label-md">Profile</span>
+</div>
+</nav>
+<script>
+        // Simple animation to "grow" the bars on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            const bars = document.querySelectorAll('.bar-grow');
+            bars.forEach(bar => {
+                const finalHeight = bar.parentElement.style.height;
+                bar.style.height = '0%';
+                setTimeout(() => {
+                    bar.style.height = '100%';
+                }, 100);
+            });
+        });
+    </script>
+</body></html>

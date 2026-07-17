@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+
+<html class="light" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Quản lý bộ câu hỏi - Company Quiz Game</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-container": "#fcd069",
+                        "outline": "#727970",
+                        "primary-fixed-dim": "#a0d3a5",
+                        "inverse-primary": "#a0d3a5",
+                        "surface-container-low": "#ecf7e9",
+                        "on-primary": "#ffffff",
+                        "tertiary-fixed-dim": "#ecc15c",
+                        "on-error": "#ffffff",
+                        "on-tertiary-fixed": "#251a00",
+                        "error": "#ba1a1a",
+                        "on-secondary-fixed": "#311300",
+                        "on-secondary-container": "#5c2900",
+                        "surface-container-lowest": "#ffffff",
+                        "soft-cream": "#FFF4A4",
+                        "on-surface-variant": "#414941",
+                        "error-red": "#D92D20",
+                        "on-primary-fixed-variant": "#22502d",
+                        "on-surface": "#151e15",
+                        "inverse-on-surface": "#eaf4e6",
+                        "secondary-fixed-dim": "#ffb689",
+                        "surface-white": "#FFFFFF",
+                        "surface-tint": "#3a6843",
+                        "on-primary-container": "#afe2b3",
+                        "on-secondary": "#ffffff",
+                        "secondary": "#984800",
+                        "surface-bright": "#f2fcee",
+                        "outline-variant": "#c1c9be",
+                        "background": "#f2fcee",
+                        "inverse-surface": "#2a332a",
+                        "on-error-container": "#93000a",
+                        "on-secondary-fixed-variant": "#733500",
+                        "success-green": "#2E7D32",
+                        "secondary-fixed": "#ffdbc8",
+                        "on-tertiary-fixed-variant": "#5b4300",
+                        "app-bg": "#F8FAF8",
+                        "surface-container-highest": "#dbe5d8",
+                        "on-background": "#151e15",
+                        "tertiary-fixed": "#ffdf9c",
+                        "secondary-container": "#fc7d05",
+                        "error-container": "#ffdad6",
+                        "primary-fixed": "#bcefc0",
+                        "surface-dim": "#d3ddcf",
+                        "surface-variant": "#dbe5d8",
+                        "primary": "#204e2b",
+                        "surface-container-high": "#e1ebdd",
+                        "on-tertiary": "#ffffff",
+                        "tertiary": "#584100",
+                        "primary-container": "#386641",
+                        "tertiary-container": "#755800",
+                        "border-subtle": "#D8E0D8",
+                        "surface-container": "#e7f1e3",
+                        "on-primary-fixed": "#00210a",
+                        "surface": "#f2fcee"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xs": "8px",
+                        "container-max": "1280px",
+                        "md": "24px",
+                        "sm": "16px",
+                        "gutter": "16px",
+                        "base": "4px",
+                        "lg": "48px",
+                        "xl": "64px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Be Vietnam Pro"],
+                        "headline-lg": ["Be Vietnam Pro"],
+                        "headline-md": ["Be Vietnam Pro"],
+                        "label-lg": ["Be Vietnam Pro"],
+                        "headline-lg-mobile": ["Be Vietnam Pro"],
+                        "headline-sm": ["Be Vietnam Pro"],
+                        "label-md": ["Be Vietnam Pro"],
+                        "display-lg": ["Be Vietnam Pro"],
+                        "body-lg": ["Be Vietnam Pro"],
+                        "display-lg-mobile": ["Be Vietnam Pro"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Be Vietnam Pro', sans-serif;
+            background-color: #F8FAF8;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .quiz-card {
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .quiz-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 24px -10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="text-on-surface">
+<!-- Desktop Sidebar Navigation (SideNavBar) -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-surface-container-low border-r border-outline-variant flex flex-col p-sm gap-xs hidden md:flex z-40">
+<!-- Brand Identity -->
+<div class="mb-lg px-xs">
+<h1 class="font-headline-md text-headline-md font-bold text-primary">Admin Console</h1>
+<p class="text-label-md font-label-md text-on-surface-variant">Corporate HQ</p>
+</div>
+<!-- Navigation Links -->
+<nav class="flex-grow flex flex-col gap-xs">
+<a class="text-on-surface-variant hover:bg-surface-container-high rounded-lg flex items-center gap-sm px-sm py-xs transition-colors font-label-lg text-label-lg" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span>Dashboard</span>
+</a>
+<!-- Active Tab: My Quizzes -->
+<a class="bg-primary-container text-on-primary-container font-bold rounded-lg flex items-center gap-sm px-sm py-xs transition-transform duration-200 active:scale-95 font-label-lg text-label-lg" href="#">
+<span class="material-symbols-outlined">quiz</span>
+<span>My Quizzes</span>
+</a>
+<a class="text-on-surface-variant hover:bg-surface-container-high rounded-lg flex items-center gap-sm px-sm py-xs transition-colors font-label-lg text-label-lg" href="#">
+<span class="material-symbols-outlined">sensors</span>
+<span>Live Sessions</span>
+</a>
+<a class="text-on-surface-variant hover:bg-surface-container-high rounded-lg flex items-center gap-sm px-sm py-xs transition-colors font-label-lg text-label-lg" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span>Reports</span>
+</a>
+<a class="text-on-surface-variant hover:bg-surface-container-high rounded-lg flex items-center gap-sm px-sm py-xs transition-colors font-label-lg text-label-lg" href="#">
+<span class="material-symbols-outlined">group</span>
+<span>User Management</span>
+</a>
+</nav>
+<!-- CTA in Sidebar -->
+<button class="mt-md w-full bg-primary text-on-primary py-sm rounded-xl font-bold flex items-center justify-center gap-xs hover:opacity-90 transition-all">
+<span class="material-symbols-outlined">add</span>
+<span>Create New Quiz</span>
+</button>
+<!-- Sidebar Footer -->
+<div class="mt-auto border-t border-outline-variant pt-sm flex flex-col gap-xs">
+<a class="text-on-surface-variant hover:bg-surface-container-high rounded-lg flex items-center gap-sm px-sm py-xs transition-colors font-label-lg text-label-lg" href="#">
+<span class="material-symbols-outlined">help</span>
+<span>Help</span>
+</a>
+<a class="text-on-surface-variant hover:bg-surface-container-high rounded-lg flex items-center gap-sm px-sm py-xs transition-colors font-label-lg text-label-lg" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span>Logout</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="md:ml-64 min-h-screen">
+<!-- Top Navigation Bar -->
+<header class="sticky top-0 w-full z-30 flex justify-between items-center px-md py-sm bg-surface-white shadow-sm max-w-container-max mx-auto">
+<div class="flex items-center gap-sm">
+<h2 class="font-headline-sm text-headline-sm font-bold text-primary">Quản lý bộ câu hỏi</h2>
+</div>
+<div class="flex items-center gap-md">
+<div class="hidden lg:flex items-center bg-surface-container px-sm py-xs rounded-full gap-xs">
+<span class="material-symbols-outlined text-outline">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-label-md font-label-md w-64" placeholder="Tìm kiếm bộ câu hỏi..." type="text"/>
+</div>
+<div class="flex items-center gap-sm">
+<button class="material-symbols-outlined text-primary p-xs hover:bg-surface-container rounded-full">notifications</button>
+<button class="material-symbols-outlined text-primary p-xs hover:bg-surface-container rounded-full">settings</button>
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary-fixed-dim">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a corporate executive for a profile picture, set against a soft, blurred office environment with natural lighting and professional attire, reflecting a modern and authoritative brand image." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBbRiKw780n69tAKCZ84Ul2Ci0u4pxdQcvJy6b3IoYuRUuXVY8PNl1HE9MwcRQ4lWs8vg-FnDzGzILaXyUR1t1OKSW_YIcrP4KmmC5TR-eDduMrCPbYB9K_629g5aS2yf1zelSmz4J1CUQKOAICAIPrUfkg8wiXqwABcPA4iVUy8SZwCMmzcvvFYAMoHd9FOoBETlaFiC8oRkeyNpSc9a5crqoQO7wrZvAllLWpDnbJQUglS-UhR95bbe3I0pkk8fJbzvUYKHyF2o2r"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Content Area -->
+<div class="p-md lg:p-xl max-w-container-max mx-auto">
+<!-- Welcome/Stats Bento-ish Row -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-md mb-xl">
+<div class="md:col-span-2 bg-primary-container text-on-primary-container p-xl rounded-2xl flex justify-between items-center relative overflow-hidden">
+<div class="relative z-10">
+<h3 class="font-headline-md text-headline-md mb-xs">Chào mừng trở lại, Admin!</h3>
+<p class="font-body-md text-body-md opacity-90 max-w-md">Hôm nay có 128 nhân viên đang tham gia các bộ câu hỏi trực tiếp. Hãy kiểm tra báo cáo mới nhất.</p>
+</div>
+<div class="hidden lg:block relative z-10">
+<button class="bg-soft-cream text-primary font-bold px-lg py-sm rounded-xl hover:shadow-lg transition-all">Xem báo cáo</button>
+</div>
+<!-- Decorative Element -->
+<div class="absolute right-0 top-0 w-64 h-64 bg-primary-fixed-dim opacity-10 rounded-full -mr-20 -mt-20"></div>
+</div>
+<div class="bg-white p-xl rounded-2xl shadow-sm border border-border-subtle flex flex-col justify-center">
+<span class="text-label-md font-label-md text-outline uppercase tracking-wider">Tổng số câu hỏi</span>
+<span class="font-display-lg text-display-lg text-primary">1,452</span>
+</div>
+</div>
+<!-- Quiz List Header -->
+<div class="flex flex-col md:flex-row md:items-center justify-between mb-md gap-md">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Danh sách bộ câu hỏi</h3>
+<p class="text-body-md text-on-surface-variant">Tất cả các nội dung đào tạo và kiểm tra nội bộ</p>
+</div>
+<button class="h-14 bg-primary text-white px-xl rounded-xl font-bold flex items-center justify-center gap-sm hover:scale-105 active:scale-95 transition-all shadow-md">
+<span class="material-symbols-outlined">add_circle</span>
+<span>Tạo bộ câu hỏi</span>
+</button>
+</div>
+<!-- Quiz Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-md">
+<!-- Quiz Card 1 -->
+<div class="quiz-card bg-white p-md rounded-2xl border border-border-subtle flex gap-md">
+<div class="w-32 h-32 rounded-xl overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="A minimalist professional workspace background with high-end corporate branding elements, clean lines, and a focused energetic vibe. Deep forest green and soft cream accents create a premium feel." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBcKjoifUTb_VvFzz80WrGkI-316w3pJkzEYYvhEFWYHRssgLiMBXhuWZmwKZGOXutN5EiMmxCjYimSyA4C1PkUmv2JTqBVH-vj6EivE1OQwivXdD9eCozpScHwvSHPnUT8qaC3uZyWKUQHJUK0Ca_hRpwr_5sewIc3VEkDzV2qRJjoJDRm64jxDEytC-adxKMSvkOcjOnMAdKABKNYkyTDYJ7MqLNMrX3fmy3EWToFaKLabNi8Kfm3-ppiv_gQJEw1amZmhn6Vb0Hq"/>
+</div>
+<div class="flex flex-col justify-between flex-grow">
+<div>
+<div class="flex justify-between items-start mb-base">
+<h4 class="font-label-lg text-label-lg text-primary">Văn hóa Doanh nghiệp 2024</h4>
+<span class="bg-success-green/10 text-success-green text-[12px] font-bold px-sm py-1 rounded-full uppercase">Đang hoạt động</span>
+</div>
+<p class="text-body-md text-on-surface-variant line-clamp-2">Kiểm tra kiến thức về các giá trị cốt lõi và tầm nhìn chiến lược của công ty trong giai đoạn mới.</p>
+</div>
+<div class="flex items-center justify-between mt-sm">
+<div class="flex items-center gap-sm text-outline">
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-[18px]">list_alt</span>
+<span class="text-label-md font-label-md">20 câu</span>
+</div>
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-[18px]">group</span>
+<span class="text-label-md font-label-md">1.2k lượt</span>
+</div>
+</div>
+<div class="flex gap-xs">
+<button class="p-xs text-primary hover:bg-primary-fixed rounded-lg transition-colors material-symbols-outlined">edit</button>
+<button class="p-xs text-error-red hover:bg-error-container rounded-lg transition-colors material-symbols-outlined">delete</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Quiz Card 2 -->
+<div class="quiz-card bg-white p-md rounded-2xl border border-border-subtle flex gap-md">
+<div class="w-32 h-32 rounded-xl overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="Cybersecurity and data protection abstract concept illustration for a corporate training theme. Professional, sleek digital elements with high-tech security motifs using the brand's primary green and soft gray palette." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBPaySwQvhVAJ1dyyGIGPlw9nSKFNjCW4wlqXeI19mhXEc8aEnSpj4dz3cuKoHwJ6eeZs_0yIIS77AqX75-bF_8POjaoMlfy6jGORefNh-ZX4WyG2rzkMmRku27KPaJBCYeKITayy6_8Kcl_1lryqZQ_8T8CEpsmX4LmeRb2LmrJSsFn2_E7lnadVJ3ba_ioG2OT3rJzdOcwwe8OkreZyI9ElypueFgwb7w3S9yig1cG9pwr5XHxd3OJk4U5KMqzQAJ_CSjz9wydJLv"/>
+</div>
+<div class="flex flex-col justify-between flex-grow">
+<div>
+<div class="flex justify-between items-start mb-base">
+<h4 class="font-label-lg text-label-lg text-primary">An toàn Thông tin cơ bản</h4>
+<span class="bg-outline-variant/30 text-on-surface-variant text-[12px] font-bold px-sm py-1 rounded-full uppercase">Đã tắt</span>
+</div>
+<p class="text-body-md text-on-surface-variant line-clamp-2">Cập nhật các quy tắc bảo mật dữ liệu và phòng chống tấn công mạng tại nơi làm việc.</p>
+</div>
+<div class="flex items-center justify-between mt-sm">
+<div class="flex items-center gap-sm text-outline">
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-[18px]">list_alt</span>
+<span class="text-label-md font-label-md">15 câu</span>
+</div>
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-[18px]">group</span>
+<span class="text-label-md font-label-md">450 lượt</span>
+</div>
+</div>
+<div class="flex gap-xs">
+<button class="p-xs text-primary hover:bg-primary-fixed rounded-lg transition-colors material-symbols-outlined">edit</button>
+<button class="p-xs text-error-red hover:bg-error-container rounded-lg transition-colors material-symbols-outlined">delete</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Quiz Card 3 -->
+<div class="quiz-card bg-white p-md rounded-2xl border border-border-subtle flex gap-md">
+<div class="w-32 h-32 rounded-xl overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="Customer service and professional communication theme illustration. Clean, modern icons of interaction and dialogue, illuminated by bright, soft lighting consistent with a corporate minimalism aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAMJwSPVN0aFBUjtkPwwGWQJ3ySNMEq03wAI2-uA9bL9vfnI6NqUX9E-_qwGxAAI7c8j8QkhWP4nim3ZVzmMybkpKpudVWuSI5kqEcmoV1c61-symqUTLc6rRezq9lRhOM1Er85ikOmndsouHaGM6HiDeoPTRzI8qMKjFsducp6l9_ehJcjkbIdEo3Mpb2CUA3FcoVqpB0TYuRq5ZbpB6AQYHO1s7Fs7nY9jLbXsF7mhkXq1ydKMDznWBpp8VLel185-vvPsqtNNdEJ"/>
+</div>
+<div class="flex flex-col justify-between flex-grow">
+<div>
+<div class="flex justify-between items-start mb-base">
+<h4 class="font-label-lg text-label-lg text-primary">Kỹ năng Chăm sóc Khách hàng</h4>
+<span class="bg-success-green/10 text-success-green text-[12px] font-bold px-sm py-1 rounded-full uppercase">Đang hoạt động</span>
+</div>
+<p class="text-body-md text-on-surface-variant line-clamp-2">Nâng cao tiêu chuẩn phục vụ và xử lý tình huống thực tế với khách hàng doanh nghiệp.</p>
+</div>
+<div class="flex items-center justify-between mt-sm">
+<div class="flex items-center gap-sm text-outline">
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-[18px]">list_alt</span>
+<span class="text-label-md font-label-md">25 câu</span>
+</div>
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-[18px]">group</span>
+<span class="text-label-md font-label-md">890 lượt</span>
+</div>
+</div>
+<div class="flex gap-xs">
+<button class="p-xs text-primary hover:bg-primary-fixed rounded-lg transition-colors material-symbols-outlined">edit</button>
+<button class="p-xs text-error-red hover:bg-error-container rounded-lg transition-colors material-symbols-outlined">delete</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Quiz Card 4 -->
+<div class="quiz-card bg-soft-cream p-md rounded-2xl border border-secondary shadow-md flex gap-md">
+<div class="w-32 h-32 rounded-xl overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="New employee onboarding and integration visual. Dynamic, welcoming, and high-energy imagery featuring celebratory elements and corporate branding in a modern, streamlined style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB_ar7jvh8yaoIcwdtwe1XEMK0HA64TBhZzxttzbCL11laiNLiscj0jeSNfUHpb2HbKr4eyqjyUcAWXfmyaCiXhdO4mxg7b-3hehCsWBhEObI2y5uIxO0neQoVhWGE7dvlwB3hQKrsG5d0Ke3fwwsMkmroPSbYWo1WAOmlBl1Wx6Vb5TtYgnF7UXl8VUiLZPWguCMshE15XcCuzdV_6vUpCBuLXqKJaexm18_d5m2yUpdy_Me4jHEj9yx2pwRdFa_VQzVFmniP2be8R"/>
+</div>
+<div class="flex flex-col justify-between flex-grow">
+<div>
+<div class="flex justify-between items-start mb-base">
+<h4 class="font-label-lg text-label-lg text-primary">Onboarding Nhân viên mới Q3</h4>
+<span class="bg-secondary/10 text-secondary text-[12px] font-bold px-sm py-1 rounded-full uppercase">Sắp diễn ra</span>
+</div>
+<p class="text-body-md text-on-surface-variant line-clamp-2">Bộ câu hỏi đặc biệt dành cho các thành viên mới gia nhập công ty trong quý 3.</p>
+</div>
+<div class="flex items-center justify-between mt-sm">
+<div class="flex items-center gap-sm text-outline">
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-[18px]">list_alt</span>
+<span class="text-label-md font-label-md">10 câu</span>
+</div>
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-[18px]">schedule</span>
+<span class="text-label-md font-label-md">Còn 2 ngày</span>
+</div>
+</div>
+<div class="flex gap-xs">
+<button class="p-xs text-primary hover:bg-primary-fixed rounded-lg transition-colors material-symbols-outlined">edit</button>
+<button class="p-xs text-error-red hover:bg-error-container rounded-lg transition-colors material-symbols-outlined">delete</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Empty State / Add More (Subtle) -->
+<div class="mt-xl p-xl border-2 border-dashed border-outline-variant rounded-2xl flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-low transition-all cursor-pointer group">
+<span class="material-symbols-outlined text-[48px] mb-sm group-hover:scale-110 transition-transform">add_circle_outline</span>
+<p class="font-label-lg text-label-lg">Tạo bộ câu hỏi mới</p>
+<p class="text-body-md text-outline">Bắt đầu bằng cách nhập nội dung hoặc tải lên file Excel</p>
+</div>
+</div>
+</main>
+<!-- Mobile Navigation (BottomNavBar) - Visible only on mobile -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full flex justify-around items-center px-4 py-2 pb-safe bg-surface-white shadow-[0_-2px_10px_rgba(0,0,0,0.05)] z-50">
+<a class="flex flex-col items-center justify-center text-outline p-2 hover:text-primary transition-all" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-md text-label-md">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-xl p-2 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined">quiz</span>
+<span class="font-label-md text-label-md">Quizzes</span>
+</a>
+<a class="flex flex-col items-center justify-center text-outline p-2 hover:text-primary transition-all" href="#">
+<span class="material-symbols-outlined">history</span>
+<span class="font-label-md text-label-md">History</span>
+</a>
+<a class="flex flex-col items-center justify-center text-outline p-2 hover:text-primary transition-all" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-md text-label-md">Profile</span>
+</a>
+</nav>
+<script>
+        // Micro-interaction for hover effects on buttons
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('mousedown', () => {
+                button.style.transform = 'scale(0.98)';
+            });
+            button.addEventListener('mouseup', () => {
+                button.style.transform = 'scale(1)';
+            });
+        });
+
+        // Search bar activation effect
+        const searchInput = document.querySelector('input[type="text"]');
+        if(searchInput) {
+            searchInput.addEventListener('focus', () => {
+                searchInput.parentElement.classList.add('ring-2', 'ring-primary-fixed-dim', 'bg-white');
+            });
+            searchInput.addEventListener('blur', () => {
+                searchInput.parentElement.classList.remove('ring-2', 'ring-primary-fixed-dim', 'bg-white');
+            });
+        }
+    </script>
+</body></html>
