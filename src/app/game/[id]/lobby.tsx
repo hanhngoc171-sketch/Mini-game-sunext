@@ -2,6 +2,8 @@ import { Participant, supabase } from '@/types/types'
 import { FormEvent, useEffect, useState } from 'react'
 import {
   DEFAULT_AVATAR_ID,
+  FLAG_AVATARS,
+  ANIMAL_AVATARS,
   PLAYER_AVATARS,
 } from '@/constants/avatars'
 import { AvatarOptionButton, FlagAvatar } from '@/components/FlagAvatar'
@@ -322,22 +324,43 @@ function Register({
 
             <div>
               <label className="block text-label-md text-on-surface-variant mb-xs">
-                Chọn avatar (Top 10 FIFA + Việt Nam)
+                Chọn avatar
               </label>
-              <div className="grid grid-cols-5 sm:grid-cols-6 gap-2 justify-items-center bg-app-bg rounded-xl p-sm border border-[#CBD5CB]">
-                {PLAYER_AVATARS.map((avatar) => (
-                  <AvatarOptionButton
-                    key={avatar.id}
-                    avatar={avatar}
-                    selected={avatarId === avatar.id}
-                    onSelect={setAvatarId}
-                  />
-                ))}
+              <div className="space-y-sm bg-app-bg rounded-xl p-sm border border-[#CBD5CB]">
+                <div>
+                  <p className="text-label-md text-on-surface-variant mb-xs px-0.5">
+                    Quốc kỳ
+                  </p>
+                  <div className="grid grid-cols-5 sm:grid-cols-6 gap-2 justify-items-center">
+                    {FLAG_AVATARS.map((avatar) => (
+                      <AvatarOptionButton
+                        key={avatar.id}
+                        avatar={avatar}
+                        selected={avatarId === avatar.id}
+                        onSelect={setAvatarId}
+                      />
+                    ))}
+                  </div>
+                </div>
+                <div className="h-px bg-[#CBD5CB]/80" />
+                <div>
+                  <p className="text-label-md text-on-surface-variant mb-xs px-0.5">
+                    Động vật cute
+                  </p>
+                  <div className="grid grid-cols-6 gap-2 justify-items-center">
+                    {ANIMAL_AVATARS.map((avatar) => (
+                      <AvatarOptionButton
+                        key={avatar.id}
+                        avatar={avatar}
+                        selected={avatarId === avatar.id}
+                        onSelect={setAvatarId}
+                      />
+                    ))}
+                  </div>
+                </div>
               </div>
               <p className="mt-xs text-center text-label-md text-on-surface-variant">
-                {
-                  PLAYER_AVATARS.find((a) => a.id === avatarId)?.name
-                }
+                {PLAYER_AVATARS.find((a) => a.id === avatarId)?.name}
               </p>
             </div>
 

@@ -13,6 +13,13 @@ const sizeMap: Record<Size, string> = {
   xl: 'w-40 h-40',
 }
 
+const emojiSizeMap: Record<Size, string> = {
+  sm: 'text-base',
+  md: 'text-2xl',
+  lg: 'text-5xl',
+  xl: 'text-7xl',
+}
+
 export function FlagAvatar({
   avatarId,
   size = 'md',
@@ -25,6 +32,22 @@ export function FlagAvatar({
   title?: string
 }) {
   const avatar = getAvatarById(avatarId)
+
+  if (avatar.kind === 'animal' || !avatar.flagCode) {
+    return (
+      <span
+        className={`${sizeMap[size]} rounded-full shrink-0 inline-flex items-center justify-center border border-black/10 shadow-sm ${className}`}
+        style={{ backgroundColor: avatar.bg || '#FFF4A4' }}
+        title={title || avatar.name}
+        aria-label={avatar.name}
+      >
+        <span className={`${emojiSizeMap[size]} leading-none select-none`}>
+          {avatar.emoji}
+        </span>
+      </span>
+    )
+  }
+
   return (
     <span
       className={`${sizeMap[size]} rounded-full overflow-hidden bg-surface-container shrink-0 inline-flex items-center justify-center border border-black/10 shadow-sm ${className}`}
@@ -33,7 +56,10 @@ export function FlagAvatar({
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        src={flagImageUrl(avatar.flagCode, size === 'xl' || size === 'lg' ? 160 : 80)}
+        src={flagImageUrl(
+          avatar.flagCode,
+          size === 'xl' || size === 'lg' ? 160 : 80
+        )}
         alt={avatar.name}
         className="w-full h-full object-cover"
         loading="lazy"
@@ -51,6 +77,8 @@ export function AvatarOptionButton({
   selected: boolean
   onSelect: (id: string) => void
 }) {
+  const isAnimal = avatar.kind === 'animal' || !avatar.flagCode
+
   return (
     <button
       type="button"
@@ -62,13 +90,18 @@ export function AvatarOptionButton({
           ? 'border-secondary-container ring-[3px] ring-secondary-container/30 scale-105'
           : 'border-[#CBD5CB] hover:border-primary/50'
       }`}
+      style={isAnimal ? { backgroundColor: avatar.bg || '#FFF4A4' } : undefined}
     >
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={flagImageUrl(avatar.flagCode, 80)}
-        alt={avatar.name}
-        className="w-full h-full object-cover"
-      />
+      {isAnimal ? (
+        <span className="text-2xl leading-none select-none">{avatar.emoji}</span>
+      ) : (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={flagImageUrl(avatar.flagCode!, 80)}
+          alt={avatar.name}
+          className="w-full h-full object-cover"
+        />
+      )}
       {selected && (
         <span className="absolute inset-0 bg-secondary-container/20 flex items-center justify-center">
           <span className="material-symbols-outlined text-white text-[18px] drop-shadow">
