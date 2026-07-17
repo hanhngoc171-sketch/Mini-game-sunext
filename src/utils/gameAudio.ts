@@ -111,6 +111,71 @@ export function playGoFanfare(): void {
   })
 }
 
+/** Bright ascending chime — answer correct */
+export function playCorrectSfx(): void {
+  const audio = getCtx()
+  if (!audio || !unlocked) return
+  void audio.resume()
+  const now = audio.currentTime
+  const notes = [523.25, 659.25, 783.99, 1046.5]
+  notes.forEach((freq, i) => {
+    tone(audio, {
+      freq,
+      start: now + i * 0.07,
+      duration: 0.28,
+      type: 'sine',
+      gain: 0.12,
+    })
+    tone(audio, {
+      freq: freq * 2,
+      start: now + i * 0.07,
+      duration: 0.2,
+      type: 'triangle',
+      gain: 0.04,
+    })
+  })
+}
+
+/** Descending buzzer — answer wrong */
+export function playWrongSfx(): void {
+  const audio = getCtx()
+  if (!audio || !unlocked) return
+  void audio.resume()
+  const now = audio.currentTime
+  tone(audio, {
+    freq: 280,
+    start: now,
+    duration: 0.35,
+    type: 'sawtooth',
+    gain: 0.1,
+    slideTo: 120,
+  })
+  tone(audio, {
+    freq: 220,
+    start: now + 0.12,
+    duration: 0.4,
+    type: 'square',
+    gain: 0.07,
+    slideTo: 90,
+  })
+}
+
+/** Soft low pulse — timed out */
+export function playTimeoutSfx(): void {
+  const audio = getCtx()
+  if (!audio || !unlocked) return
+  void audio.resume()
+  const now = audio.currentTime
+  tone(audio, {
+    freq: 180,
+    start: now,
+    duration: 0.45,
+    type: 'triangle',
+    gain: 0.08,
+    slideTo: 90,
+  })
+}
+
 /** Kahoot-like looping tension bed while quiz is live */
 export function startTensionBgm(): void {
   const audio = getCtx()

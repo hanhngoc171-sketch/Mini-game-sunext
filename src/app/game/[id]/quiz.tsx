@@ -124,6 +124,12 @@ export default function Quiz({
         ? 'correct'
         : 'wrong'
 
+    void unlockGameAudio().then(() => {
+      if (kind === 'correct') playCorrectSfx()
+      else if (kind === 'wrong') playWrongSfx()
+      else playTimeoutSfx()
+    })
+
     setFeedback({
       kind,
       score,
