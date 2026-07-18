@@ -235,22 +235,10 @@ export default function Quiz({
                 </span>
               </div>
             ) : (
-              <div className="w-full space-y-sm">
-                <div className="inline-flex items-center bg-white px-sm py-1 rounded-full border border-outline-variant/30">
-                  <span className="text-label-lg text-on-surface-variant font-bold">
-                    +0 điểm
-                  </span>
-                </div>
-                {feedback.kind !== 'timeout' && feedback.correctBody && (
-                  <div className="bg-soft-cream rounded-lg p-sm text-left">
-                    <p className="text-label-md text-on-surface-variant mb-1">
-                      Đáp án đúng
-                    </p>
-                    <p className="text-label-lg text-primary font-semibold">
-                      {feedback.correctBody}
-                    </p>
-                  </div>
-                )}
+              <div className="inline-flex items-center bg-white px-sm py-1 rounded-full border border-outline-variant/30">
+                <span className="text-label-lg text-on-surface-variant font-bold">
+                  +0 điểm
+                </span>
               </div>
             )}
             <p className="text-label-md text-on-surface-variant">
