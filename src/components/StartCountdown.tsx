@@ -94,9 +94,9 @@ export default function StartCountdown({ onComplete }: Props) {
       ) : (
         <div
           key={value}
-          className="relative z-10 select-none animate-fade-in"
+          className="relative z-10 select-none animate-fade-in w-full flex flex-col items-center justify-center px-md text-center"
         >
-          <p className="text-[140px] md:text-[200px] leading-none font-extrabold text-white drop-shadow-2xl tracking-tight">
+          <p className="w-full text-center text-[120px] sm:text-[140px] md:text-[200px] leading-none font-extrabold text-white drop-shadow-2xl tabular-nums">
             {value}
           </p>
           <p className="text-center text-label-lg text-primary-fixed-dim mt-sm uppercase tracking-[0.25em]">

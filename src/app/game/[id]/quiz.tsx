@@ -319,8 +319,8 @@ export default function Quiz({
             </CountdownCircleTimer>
           </div>
 
-          <div className="w-full bg-white rounded-xl p-md border border-outline-variant/20 mb-md shadow-sm">
-            <h2 className="text-headline-sm text-center text-on-surface font-bold leading-tight">
+          <div className="w-full bg-white rounded-xl p-sm sm:p-md border border-outline-variant/20 mb-md shadow-sm">
+            <h2 className="text-[15px] sm:text-base md:text-label-lg text-center text-on-surface font-semibold leading-snug">
               {question.body}
             </h2>
           </div>
